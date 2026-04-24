@@ -1,0 +1,559 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta - Finance Kids</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --amarillo:    #FFD600;
+            --naranja:     #FF6B35;
+            --rosa:        #FF4D8D;
+            --morado:      #7B2FBE;
+            --celeste:     #00C2FF;
+            --verde:       #00D68F;
+            --azul-oscuro: #1A1259;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1A1259 0%, #2D2480 45%, #7B2FBE 100%);
+            display: flex; flex-direction: column; overflow-x: hidden;
+        }
+
+        /* BURBUJAS */
+        .bubbles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .bubble  { position: absolute; border-radius: 50%; opacity: 0.1; animation: floatUp linear infinite; }
+        .bubble:nth-child(1){width:90px; height:90px; background:var(--verde);   left:4%;  animation-duration:14s;animation-delay:-2s;}
+        .bubble:nth-child(2){width:55px; height:55px; background:var(--amarillo);left:20%; animation-duration:10s;animation-delay:-5s;}
+        .bubble:nth-child(3){width:120px;height:120px;background:var(--celeste); left:47%; animation-duration:18s;animation-delay:-8s;}
+        .bubble:nth-child(4){width:50px; height:50px; background:var(--naranja); left:72%; animation-duration:12s;animation-delay:-3s;}
+        .bubble:nth-child(5){width:75px; height:75px; background:var(--rosa);    left:90%; animation-duration:16s;animation-delay:-7s;}
+        .bubble:nth-child(6){width:40px; height:40px; background:var(--morado);  left:35%; animation-duration:9s; animation-delay:-1s;}
+        @keyframes floatUp {
+            0%   {transform:translateY(110vh) scale(0.8);opacity:0;}
+            10%  {opacity:0.1;} 90%{opacity:0.1;}
+            100% {transform:translateY(-15vh) scale(1.1);opacity:0;}
+        }
+
+        /* NAVBAR */
+        .navbar-kids {
+            position:relative;z-index:10;
+            background:rgba(255,255,255,0.07);backdrop-filter:blur(12px);
+            border-bottom:2px solid rgba(255,255,255,0.1);padding:12px 0;
+        }
+        .navbar-brand-kids {
+            font-family:'Fredoka One',cursive;font-size:1.8rem;
+            background:linear-gradient(90deg,var(--amarillo),var(--naranja));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            text-decoration:none;
+        }
+
+        /* MAIN */
+        .main-wrap {
+            position:relative;z-index:1;flex:1;
+            display:flex;align-items:flex-start;justify-content:center;
+            padding:36px 16px 48px;
+        }
+
+        .register-container {
+            display:grid;grid-template-columns:320px 1fr;
+            max-width:980px;width:100%;
+            background:rgba(255,255,255,0.06);
+            border:1px solid rgba(255,255,255,0.12);
+            border-radius:32px;overflow:hidden;
+            backdrop-filter:blur(20px);
+            box-shadow:0 30px 80px rgba(0,0,0,0.4);
+            animation:cardIn 0.8s cubic-bezier(.22,1,.36,1) both;
+        }
+        @keyframes cardIn{from{opacity:0;transform:translateY(40px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+        /* PANEL IZQUIERDO */
+        .register-left {
+            background:linear-gradient(160deg,#0D2A0A 0%,#1A4A16 55%,#00D68F 100%);
+            display:flex;flex-direction:column;align-items:center;
+            padding:44px 26px;text-align:center;
+            position:sticky;top:0;align-self:start;max-height:100vh;
+        }
+        .register-left::before {
+            content:'';position:absolute;inset:0;
+            background:radial-gradient(circle at 45% 45%,rgba(0,214,143,0.3),transparent 65%);
+            pointer-events:none;
+        }
+        .mascota-wrap{position:relative;z-index:1;}
+        .mascota-wrap img {
+            width:170px;height:auto;
+            filter:drop-shadow(0 12px 30px rgba(0,0,0,0.4));
+            animation:mascotaBounce 3s ease-in-out infinite;
+        }
+        @keyframes mascotaBounce{0%,100%{transform:translateY(0) rotate(1deg);}50%{transform:translateY(-12px) rotate(-1deg);}}
+        .brand-title {
+            position:relative;z-index:1;
+            font-family:'Fredoka One',cursive;font-size:1.55rem;color:#fff;
+            margin-top:14px;line-height:1.2;
+        }
+        .brand-title span {
+            background:linear-gradient(90deg,var(--amarillo),var(--verde));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+        }
+        .brand-sub {
+            position:relative;z-index:1;
+            color:rgba(255,255,255,0.58);font-size:0.83rem;font-weight:600;
+            margin-top:8px;margin-bottom:20px;
+        }
+
+        /* STEP TRACKER */
+        .step-tracker{position:relative;z-index:1;width:100%;}
+        .step-item {
+            display:flex;align-items:center;gap:11px;
+            padding:9px 13px;border-radius:13px;margin-bottom:7px;
+            background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+            transition:all 0.3s;
+        }
+        .step-item.active{background:rgba(0,214,143,0.2);border-color:rgba(0,214,143,0.4);}
+        .step-item.done  {background:rgba(0,214,143,0.1);border-color:rgba(0,214,143,0.22);}
+        .step-dot {
+            width:27px;height:27px;border-radius:50%;flex-shrink:0;
+            display:flex;align-items:center;justify-content:center;
+            font-family:'Fredoka One',cursive;font-size:0.8rem;color:#fff;
+            background:rgba(255,255,255,0.15);transition:background 0.3s;
+        }
+        .step-item.active .step-dot{background:var(--verde);}
+        .step-item.done   .step-dot{background:rgba(0,214,143,0.5);}
+        .step-label{color:rgba(255,255,255,0.65);font-size:0.8rem;font-weight:700;}
+        .step-item.active .step-label,.step-item.done .step-label{color:#fff;}
+
+        /* PANEL DERECHO */
+        .register-right{background:#fff;padding:42px 38px;overflow-y:auto;}
+
+        .logo-wrap{display:flex;align-items:center;gap:11px;margin-bottom:22px;}
+        .logo-wrap img{width:44px;height:44px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.15);object-fit:cover;}
+        .logo-text{font-family:'Fredoka One',cursive;font-size:1.4rem;background:linear-gradient(90deg,var(--verde),var(--celeste));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+        .register-title{font-family:'Fredoka One',cursive;font-size:1.9rem;color:var(--azul-oscuro);margin-bottom:4px;}
+        .register-sub  {color:#888;font-size:0.88rem;font-weight:600;margin-bottom:24px;}
+
+        /* PILLS */
+        .form-section-pill {
+            display:inline-flex;align-items:center;gap:7px;
+            font-family:'Fredoka One',cursive;font-size:0.95rem;color:#fff;
+            padding:6px 16px;border-radius:50px;margin-bottom:14px;margin-top:6px;
+        }
+        .pill-cuenta  {background:linear-gradient(90deg,var(--morado),var(--rosa));   box-shadow:0 4px 14px rgba(123,47,190,0.35);}
+        .pill-personal{background:linear-gradient(90deg,var(--celeste),var(--verde));  box-shadow:0 4px 14px rgba(0,194,255,0.3);}
+        .pill-tutor   {background:linear-gradient(90deg,var(--naranja),var(--amarillo));color:#1A1259;box-shadow:0 4px 14px rgba(255,107,53,0.3);}
+        .pill-consent {background:linear-gradient(90deg,var(--rosa),var(--morado));    box-shadow:0 4px 14px rgba(255,77,141,0.3);}
+
+        /* SECTION BOXES */
+        .form-section-box {
+            background:#FAFAFA;border-radius:18px;padding:20px 18px;
+            margin-bottom:18px;border:2px solid #F0F0F0;transition:border-color 0.25s;
+        }
+        .form-section-box:focus-within{border-color:rgba(0,214,143,0.3);}
+
+        /* FIELDS */
+        .field-block{margin-bottom:14px;}
+        .field-block:last-child{margin-bottom:0;}
+        .field-label{font-weight:800;font-size:0.83rem;color:var(--azul-oscuro);margin-bottom:5px;display:block;}
+
+        .input-wrap{position:relative;}
+        .input-icon-left {
+            position:absolute;left:13px;top:50%;transform:translateY(-50%);
+            color:#bbb;font-size:0.95rem;pointer-events:none;transition:color 0.25s;
+        }
+        .input-wrap:focus-within .input-icon-left{color:var(--verde);}
+
+        .field-input {
+            width:100%;padding:11px 13px 11px 40px;
+            border:2px solid #E5E7EB;border-radius:12px;
+            font-family:'Nunito',sans-serif;font-size:0.93rem;font-weight:600;
+            background:#fff;color:#1A1259;outline:none;
+            transition:border-color 0.25s,box-shadow 0.25s;
+        }
+        .field-input:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(0,214,143,0.1);}
+        .field-input.field-error{border-color:#FF3B3B;box-shadow:0 0 0 3px rgba(255,59,59,0.1);}
+
+        .field-select {
+            width:100%;padding:11px 13px;
+            border:2px solid #E5E7EB;border-radius:12px;
+            font-family:'Nunito',sans-serif;font-size:0.93rem;font-weight:600;
+            background:#fff;color:#1A1259;outline:none;
+            transition:border-color 0.25s,box-shadow 0.25s;cursor:pointer;
+        }
+        .field-select:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(0,214,143,0.1);}
+        .field-select.field-error{border-color:#FF3B3B;}
+
+        .eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#bbb;font-size:0.95rem;padding:0;transition:color 0.2s;}
+        .eye-btn:hover{color:var(--verde);}
+
+        .hint-text{font-size:0.76rem;color:#aaa;font-weight:700;margin-top:4px;display:flex;align-items:center;gap:4px;}
+        .hint-text.required{color:var(--rosa);}
+
+        .error-msg {
+            background:#FEE2E2;border:1.5px solid rgba(255,59,59,0.3);
+            border-radius:10px;padding:6px 11px;margin-bottom:7px;
+            display:flex;align-items:center;gap:7px;
+            font-size:0.8rem;font-weight:700;color:#7F1D1D;
+            animation:shake 0.35s ease;
+        }
+        .error-global {
+            background:linear-gradient(135deg,#FEE2E2,#FECACA);
+            border:2px solid rgba(255,59,59,0.3);border-radius:14px;
+            padding:11px 16px;margin-bottom:18px;
+            display:flex;align-items:center;gap:10px;
+            font-weight:700;color:#7F1D1D;font-size:0.88rem;
+        }
+        @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+        /* STRENGTH */
+        .strength-wrap{margin-top:8px;}
+        .strength-bar{height:8px;border-radius:50px;background:#E5E7EB;overflow:hidden;margin-bottom:4px;}
+        .strength-fill{height:100%;border-radius:50px;width:0%;transition:width 0.4s ease,background-color 0.4s ease;}
+        .strength-text{font-size:0.76rem;font-weight:800;color:#aaa;transition:color 0.4s;}
+
+        /* CHECKBOXES */
+        .check-row {
+            display:flex;align-items:flex-start;gap:11px;
+            padding:11px 13px;border-radius:13px;
+            background:#F8F4FF;border:2px solid transparent;
+            cursor:pointer;margin-bottom:9px;
+            transition:border-color 0.25s,background 0.25s;
+            font-size:0.86rem;font-weight:700;color:#444;
+        }
+        .check-row:hover{border-color:rgba(123,47,190,0.3);background:#F0EBFF;}
+        .check-row input[type="checkbox"]{width:20px;height:20px;border-radius:6px;flex-shrink:0;accent-color:var(--morado);cursor:pointer;margin-top:1px;}
+
+        /* DIVIDER */
+        .form-divider{height:1px;background:linear-gradient(90deg,transparent,#E5E7EB,transparent);margin:20px 0;}
+
+        /* BUTTONS */
+        .btn-submit {
+            width:100%;padding:14px;
+            font-family:'Fredoka One',cursive;font-size:1.15rem;letter-spacing:1px;
+            background:linear-gradient(90deg,var(--verde),var(--celeste));
+            color:#fff;border:none;border-radius:14px;
+            box-shadow:0 6px 22px rgba(0,214,143,0.35);
+            transition:transform 0.25s,box-shadow 0.25s;cursor:pointer;margin-bottom:11px;
+        }
+        .btn-submit:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,214,143,0.45);}
+
+        .btn-login-link {
+            width:100%;padding:12px;
+            font-family:'Fredoka One',cursive;font-size:1rem;
+            background:transparent;color:var(--morado);border:2px solid var(--morado);
+            border-radius:14px;cursor:pointer;transition:all 0.25s;
+            text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;
+        }
+        .btn-login-link:hover{background:var(--morado);color:#fff;transform:translateY(-2px);}
+
+        .divider-text{text-align:center;color:#ccc;font-size:0.8rem;font-weight:700;margin:12px 0;letter-spacing:1px;}
+
+        /* FOOTER */
+        .footer-bar {
+            position:relative;z-index:1;background:rgba(255,255,255,0.04);
+            border-top:1px solid rgba(255,255,255,0.07);
+            padding:13px 0;text-align:center;
+            color:rgba(255,255,255,0.3);font-size:0.78rem;font-weight:600;
+        }
+
+        @media(max-width:860px){
+            .register-container{grid-template-columns:1fr;}
+            .register-left{display:none;}
+            .register-right{padding:30px 20px;}
+        }
+    </style>
+</head>
+<body>
+
+<div class="bubbles">
+    <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+    <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar-kids">
+    <div class="container">
+        <a class="navbar-brand-kids" href="/">💰 FinanceKids</a>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main-wrap">
+    <div class="register-container">
+
+        <!-- IZQUIERDA -->
+        <div class="register-left">
+            <div class="mascota-wrap">
+                <img src="https://media.tenor.com/B7q8IRqkYFMAAAAi/pengu-pudgy.gif" alt="Mascota">
+            </div>
+            <div class="brand-title">¡Únete a la<br><span>aventura!</span></div>
+            <p class="brand-sub">Completa el formulario y empieza a aprender sobre finanzas.</p>
+
+            <div class="step-tracker">
+                <div class="step-item active" id="step-1">
+                    <div class="step-dot"><i class="bi bi-person-fill" style="font-size:.7rem"></i></div>
+                    <div class="step-label">Datos de cuenta</div>
+                </div>
+                <div class="step-item" id="step-2">
+                    <div class="step-dot"><i class="bi bi-card-text" style="font-size:.7rem"></i></div>
+                    <div class="step-label">Datos personales</div>
+                </div>
+                <div class="step-item" id="step-3">
+                    <div class="step-dot"><i class="bi bi-people-fill" style="font-size:.7rem"></i></div>
+                    <div class="step-label">Datos del tutor</div>
+                </div>
+                <div class="step-item" id="step-4">
+                    <div class="step-dot"><i class="bi bi-shield-check-fill" style="font-size:.7rem"></i></div>
+                    <div class="step-label">Consentimientos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DERECHA -->
+        <div class="register-right" id="scroll-area">
+
+            <div class="logo-wrap">
+                <img src="{% static 'img/logo wiliam.jpg' %}" alt="Logo">
+                <span class="logo-text">FinanceKids</span>
+            </div>
+
+            <h1 class="register-title">¡Crea tu cuenta! 🚀</h1>
+            <p class="register-sub">Completa los 4 pasos y empieza tu aventura financiera hoy.</p>
+
+            {% if form.non_field_errors %}
+            <div class="error-global">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                {{ form.non_field_errors|striptags }}
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- ==== SECCIÓN 1: CUENTA ==== -->
+                <div class="form-section-pill pill-cuenta"><i class="bi bi-person-badge-fill"></i> Datos de cuenta</div>
+                <div class="form-section-box" id="box-1">
+
+                    <div class="field-block">
+                        <label class="field-label" for="id_username">Nombre de usuario <span style="color:var(--rosa)">*</span></label>
+                        {% if form.username.errors %}<div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.username.errors|striptags }}</div>{% endif %}
+                        <div class="input-wrap">
+                            <i class="bi bi-person-fill input-icon-left"></i>
+                            <input id="id_username" class="field-input {% if form.username.errors %}field-error{% endif %}"
+                                type="text" name="username" placeholder="Ej: pingüino_financiero"
+                                value="{{ form.username.value|default_if_none:'' }}" autocomplete="username" required>
+                        </div>
+                    </div>
+
+                    <div class="field-block">
+                        <label class="field-label" for="id_password1">Contraseña <span style="color:var(--rosa)">*</span></label>
+                        {% if form.password1.errors %}<div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.password1.errors|striptags }}</div>{% endif %}
+                        <div class="input-wrap">
+                            <i class="bi bi-lock-fill input-icon-left"></i>
+                            <input id="id_password1" class="field-input {% if form.password1.errors %}field-error{% endif %}"
+                                type="password" name="password1" placeholder="Crea una contraseña segura"
+                                autocomplete="new-password" required oninput="checkStrength(this.value)">
+                            <button type="button" class="eye-btn" onclick="togglePwd('id_password1','eye-1')">
+                                <i class="bi bi-eye-fill" id="eye-1"></i>
+                            </button>
+                        </div>
+                        <div class="hint-text"><i class="bi bi-info-circle"></i> Usa 8+ caracteres, letras y números.</div>
+                        <div class="strength-wrap">
+                            <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                            <div class="strength-text" id="strengthText">Seguridad: pendiente</div>
+                        </div>
+                    </div>
+
+                    <div class="field-block">
+                        <label class="field-label" for="id_password2">Confirmar contraseña <span style="color:var(--rosa)">*</span></label>
+                        {% if form.password2.errors %}<div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.password2.errors|striptags }}</div>{% endif %}
+                        <div class="input-wrap">
+                            <i class="bi bi-lock-fill input-icon-left"></i>
+                            <input id="id_password2" class="field-input {% if form.password2.errors %}field-error{% endif %}"
+                                type="password" name="password2" placeholder="Repite tu contraseña"
+                                autocomplete="new-password" required>
+                            <button type="button" class="eye-btn" onclick="togglePwd('id_password2','eye-2')">
+                                <i class="bi bi-eye-fill" id="eye-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <!-- ==== SECCIÓN 2: PERSONAL ==== -->
+                <div class="form-section-pill pill-personal"><i class="bi bi-person-vcard-fill"></i> Datos personales</div>
+                <div class="form-section-box" id="box-2">
+
+                    <div class="field-block">
+                        <label class="field-label" for="id_fecha_nacimiento">Fecha de nacimiento</label>
+                        {% if form.fecha_nacimiento.errors %}<div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.fecha_nacimiento.errors|striptags }}</div>{% endif %}
+                        <div class="input-wrap">
+                            <i class="bi bi-calendar-heart-fill input-icon-left"></i>
+                            <input id="id_fecha_nacimiento" class="field-input {% if form.fecha_nacimiento.errors %}field-error{% endif %}"
+                                type="date" name="fecha_nacimiento" value="{{ form.fecha_nacimiento.value|default_if_none:'' }}">
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="field-block mb-0">
+                                <label class="field-label" for="id_genero">Género</label>
+                                {% if form.genero.errors %}<div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.genero.errors|striptags }}</div>{% endif %}
+                                <select id="id_genero" class="field-select {% if form.genero.errors %}field-error{% endif %}" name="genero">
+                                    <option value="" {% if not form.genero.value %}selected{% endif %}>Género (opcional)</option>
+                                    <option value="M" {% if form.genero.value == 'M' %}selected{% endif %}>Masculino</option>
+                                    <option value="F" {% if form.genero.value == 'F' %}selected{% endif %}>Femenino</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="field-block mb-0">
+                                <label class="field-label" for="id_pais">País</label>
+                                {% if form.pais.errors %}<div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.pais.errors|striptags }}</div>{% endif %}
+                                <div class="input-wrap">
+                                    <i class="bi bi-globe-americas input-icon-left"></i>
+                                    <input id="id_pais" class="field-input {% if form.pais.errors %}field-error{% endif %}"
+                                        type="text" name="pais" placeholder="Ej: Colombia"
+                                        value="{{ form.pais.value|default_if_none:'' }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <!-- ==== SECCIÓN 3: TUTOR ==== -->
+                <div class="form-section-pill pill-tutor"><i class="bi bi-people-fill"></i> Datos del tutor</div>
+                <div class="form-section-box" id="box-3">
+
+                    <div class="field-block">
+                        <label class="field-label" for="id_nombre_tutor">Nombre del tutor <span style="color:var(--rosa)">*</span></label>
+                        {% if form.nombre_tutor.errors %}<div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.nombre_tutor.errors|striptags }}</div>{% endif %}
+                        <div class="input-wrap">
+                            <i class="bi bi-person-hearts input-icon-left"></i>
+                            <input id="id_nombre_tutor" class="field-input {% if form.nombre_tutor.errors %}field-error{% endif %}"
+                                type="text" name="nombre_tutor" placeholder="Nombre completo del tutor"
+                                value="{{ form.nombre_tutor.value|default_if_none:'' }}" required>
+                        </div>
+                        <div class="hint-text required"><i class="bi bi-asterisk"></i> Campo obligatorio.</div>
+                    </div>
+
+                    <div class="field-block">
+                        <label class="field-label" for="id_email_tutor">Email del tutor <span style="color:var(--rosa)">*</span></label>
+                        {% if form.email_tutor.errors %}<div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.email_tutor.errors|striptags }}</div>{% endif %}
+                        <div class="input-wrap">
+                            <i class="bi bi-envelope-fill input-icon-left"></i>
+                            <input id="id_email_tutor" class="field-input {% if form.email_tutor.errors %}field-error{% endif %}"
+                                type="email" name="email_tutor" placeholder="correo@ejemplo.com"
+                                value="{{ form.email_tutor.value|default_if_none:'' }}" required>
+                        </div>
+                        <div class="hint-text required"><i class="bi bi-asterisk"></i> Campo obligatorio.</div>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <!-- ==== SECCIÓN 4: CONSENTIMIENTOS ==== -->
+                <div class="form-section-pill pill-consent"><i class="bi bi-shield-check-fill"></i> Consentimientos</div>
+                <div class="form-section-box" id="box-4">
+
+                    {% if form.acepto_terminos.errors %}<div class="error-msg mb-2"><i class="bi bi-x-circle-fill"></i>{{ form.acepto_terminos.errors|striptags }}</div>{% endif %}
+                    <label class="check-row">
+                        <input type="checkbox" name="acepto_terminos" {% if form.acepto_terminos.value %}checked{% endif %}>
+                        <span>📋 Acepto los <strong>términos y condiciones</strong> de uso de Finance Kids.</span>
+                    </label>
+
+                    {% if form.consentimiento_tutor.errors %}<div class="error-msg mb-2"><i class="bi bi-x-circle-fill"></i>{{ form.consentimiento_tutor.errors|striptags }}</div>{% endif %}
+                    <label class="check-row">
+                        <input type="checkbox" name="consentimiento_tutor" {% if form.consentimiento_tutor.value %}checked{% endif %}>
+                        <span>👨‍👩‍👧 Confirmo que cuento con el <strong>consentimiento de mi tutor</strong> para crear esta cuenta.</span>
+                    </label>
+                </div>
+
+                <!-- BOTONES -->
+                <button type="submit" class="btn-submit">
+                    <i class="bi bi-person-check-fill me-2"></i>¡Crear mi cuenta!
+                </button>
+                <div class="divider-text">— ¿Ya tienes cuenta? —</div>
+                <a href="{% url 'login' %}" class="btn-login-link">
+                    <i class="bi bi-box-arrow-in-right"></i>Iniciar sesión
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="footer-bar">© 2025 FinanceKids 💰 · Aprendiendo finanzas desde pequeños</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function togglePwd(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon  = document.getElementById(iconId);
+        input.type  = input.type === 'password' ? 'text' : 'password';
+        icon.className = input.type === 'password' ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
+    }
+
+    const levels = [
+        { label:'Seguridad: muy baja',   width:'10%',  color:'#D1D5DB' },
+        { label:'Seguridad: débil',      width:'30%',  color:'#FF3B3B' },
+        { label:'Seguridad: media',      width:'55%',  color:'#FF9500' },
+        { label:'Seguridad: buena',      width:'78%',  color:'#00C2FF' },
+        { label:'Seguridad: fuerte 💪',  width:'100%', color:'#00D68F' },
+    ];
+
+    function checkStrength(val) {
+        let score = 0;
+        if (!val) { applyLevel(levels[0]); return; }
+        if (val.length >= 8)                         score++;
+        if (/[a-z]/.test(val) && /[A-Z]/.test(val)) score++;
+        if (/\d/.test(val))                          score++;
+        if (/[^A-Za-z0-9]/.test(val))               score++;
+        if (val.length >= 12)                        score++;
+        applyLevel(levels[Math.min(score, levels.length - 1)]);
+    }
+
+    function applyLevel(level) {
+        const fill = document.getElementById('strengthFill');
+        const text = document.getElementById('strengthText');
+        fill.style.width = level.width;
+        fill.style.backgroundColor = level.color;
+        text.textContent = level.label;
+        text.style.color = level.color;
+    }
+
+    // STEP TRACKER — resalta el paso visible al hacer scroll
+    const boxes = ['box-1','box-2','box-3','box-4'];
+    const steps = ['step-1','step-2','step-3','step-4'];
+
+    function updateSteps() {
+        let current = 0;
+        boxes.forEach((id, i) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (el.getBoundingClientRect().top < window.innerHeight * 0.6) current = i;
+        });
+        steps.forEach((id, i) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('active','done');
+            if (i < current)       el.classList.add('done');
+            else if (i === current) el.classList.add('active');
+        });
+    }
+
+    document.getElementById('scroll-area')?.addEventListener('scroll', updateSteps);
+    window.addEventListener('scroll', updateSteps);
+    updateSteps();
+</script>
+</body>
+</html>

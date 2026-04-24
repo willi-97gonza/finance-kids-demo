@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 2: Presupuesto - Finance Kids</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --amarillo:    #FFD600;
+            --naranja:     #FF6B35;
+            --rosa:        #FF4D8D;
+            --morado:      #7B2FBE;
+            --celeste:     #00C2FF;
+            --verde:       #00D68F;
+            --azul-oscuro: #1A1259;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #1A1259 0%, #2D2480 40%, #7B2FBE 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* BURBUJAS */
+        .bubbles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .bubble  { position: absolute; border-radius: 50%; opacity: 0.12; animation: floatUp linear infinite; }
+        .bubble:nth-child(1) { width:90px;  height:90px;  background:var(--celeste);  left:5%;  animation-duration:14s; animation-delay:-2s; }
+        .bubble:nth-child(2) { width:60px;  height:60px;  background:var(--verde);    left:20%; animation-duration:10s; animation-delay:-5s; }
+        .bubble:nth-child(3) { width:120px; height:120px; background:var(--amarillo); left:45%; animation-duration:18s; animation-delay:-8s; }
+        .bubble:nth-child(4) { width:50px;  height:50px;  background:var(--naranja);  left:70%; animation-duration:12s; animation-delay:-3s; }
+        .bubble:nth-child(5) { width:80px;  height:80px;  background:var(--rosa);     left:88%; animation-duration:16s; animation-delay:-9s; }
+        .bubble:nth-child(6) { width:40px;  height:40px;  background:var(--celeste);  left:33%; animation-duration:9s;  animation-delay:-1s; }
+        @keyframes floatUp {
+            0%   { transform: translateY(110vh) scale(0.8); opacity:0; }
+            10%  { opacity: 0.12; }
+            90%  { opacity: 0.12; }
+            100% { transform: translateY(-15vh) scale(1.1); opacity:0; }
+        }
+
+        /* NAVBAR */
+        .navbar-kids {
+            background: rgba(255,255,255,0.08); backdrop-filter: blur(12px);
+            border-bottom: 2px solid rgba(255,255,255,0.15);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .navbar-brand-kids {
+            font-family: 'Fredoka One', cursive; font-size: 1.8rem;
+            background: linear-gradient(90deg, var(--amarillo), var(--naranja));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-link-kids {
+            color: rgba(255,255,255,0.85) !important; font-weight: 700; font-size: 0.95rem;
+            padding: 0.4rem 1rem !important; border-radius: 50px; transition: all 0.25s;
+        }
+        .nav-link-kids:hover { background: rgba(255,255,255,0.18); color: #fff !important; }
+        .user-chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50px; padding: 6px 14px; color: #fff; font-weight: 800; font-size: 0.9rem;
+        }
+        .user-avatar {
+            width:30px; height:30px; border-radius:50%;
+            background: linear-gradient(135deg,var(--celeste),var(--verde));
+            display:flex; align-items:center; justify-content:center;
+            font-size:0.85rem; font-weight:900; color:#fff;
+        }
+
+        /* HERO */
+        .hero-section { position: relative; z-index: 1; padding: 50px 0 28px; }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--celeste), var(--verde));
+            color:#fff; font-weight:800; font-size:0.8rem; letter-spacing:2px;
+            text-transform:uppercase; padding:6px 18px; border-radius:50px; margin-bottom:18px;
+            box-shadow:0 4px 18px rgba(0,194,255,0.45); animation:pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+        .hero-title {
+            font-family:'Fredoka One',cursive; font-size:clamp(2.2rem,6vw,3.8rem);
+            color:#fff; line-height:1.1; text-shadow:0 4px 24px rgba(0,0,0,0.35);
+        }
+        .hero-title span {
+            background: linear-gradient(90deg, var(--celeste), var(--verde));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+        }
+        .hero-subtitle { color:rgba(255,255,255,0.78); font-size:1.1rem; font-weight:600; max-width:480px; }
+        .hero-emoji { font-size:7rem; animation:bounce 2s ease-in-out infinite; line-height:1; }
+        @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+        /* PROGRESS */
+        .progress-card {
+            background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+            border-radius:20px; padding:18px 24px; backdrop-filter:blur(10px);
+        }
+        .progress-label { color:#fff; font-weight:700; font-size:0.85rem; letter-spacing:1px; }
+        .progress-kids  { height:14px; border-radius:50px; background:rgba(255,255,255,0.15); }
+        .progress-kids .progress-bar {
+            border-radius:50px;
+            background:linear-gradient(90deg, var(--celeste), var(--verde));
+            box-shadow:0 0 14px rgba(0,194,255,0.6); transition:width 1s ease;
+        }
+
+        /* MAIN CARD */
+        .main-card {
+            position:relative; z-index:1; background:#fff; border-radius:28px;
+            padding:38px 34px; box-shadow:0 20px 70px rgba(0,0,0,0.3);
+            animation:slideUp 0.7s cubic-bezier(.22,1,.36,1) both;
+        }
+        @keyframes slideUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+
+        .section-pill {
+            display:inline-flex; align-items:center; gap:8px;
+            font-family:'Fredoka One',cursive; font-size:1.2rem; color:#fff;
+            background:linear-gradient(135deg, #0097c4, #00D68F);
+            padding:7px 20px; border-radius:50px; margin-bottom:18px;
+            box-shadow:0 6px 22px rgba(0,151,196,0.4);
+        }
+
+        /* GIF CARD */
+        .gif-card {
+            background: linear-gradient(135deg, #E0F7FF, #D4FFF0);
+            border-radius: 24px;
+            padding: 28px;
+            border: 3px solid rgba(0,194,255,0.25);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .gif-card::before {
+            content: '💸';
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.06;
+            top: -10px; right: -10px;
+        }
+        .gif-card img {
+            width: 180px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transition: transform 0.3s;
+        }
+        .gif-card img:hover { transform: scale(1.08) rotate(-2deg); }
+        .gif-card .gif-label {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            color: #0097c4;
+            margin-top: 12px;
+            display: block;
+        }
+
+        /* REGLA 50-30-20 */
+        .regla-card {
+            border-radius: 20px; padding: 20px 18px; height: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative; overflow: hidden; text-align: center;
+        }
+        .regla-card::before {
+            content:''; position:absolute; bottom:-25px; left:-25px;
+            width:80px; height:80px; border-radius:50%; opacity:0.15; background:#fff;
+        }
+        .regla-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
+        .regla-pct {
+            font-family: 'Fredoka One', cursive; font-size: 2.8rem;
+            color: #fff; line-height: 1; text-shadow: 0 3px 12px rgba(0,0,0,0.2);
+        }
+        .regla-titulo { font-family:'Fredoka One',cursive; font-size:1.1rem; color:#fff; margin:6px 0 4px; }
+        .regla-desc   { color:rgba(255,255,255,0.88); font-size:0.85rem; font-weight:700; }
+        .regla-necesidades { background:linear-gradient(135deg,#0097c4,#00C2FF); }
+        .regla-deseos      { background:linear-gradient(135deg,#FF6B35,#FFD600); }
+        .regla-ahorro      { background:linear-gradient(135deg,#00D68F,#7B2FBE); }
+
+        /* PASOS */
+        .paso-item {
+            display:flex; gap:16px; align-items:flex-start;
+            padding:16px 18px; border-radius:18px; background:#E8FAFF;
+            margin-bottom:12px; transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;
+            border:2px solid transparent;
+        }
+        .paso-item:hover { transform:translateX(6px); border-color:#00C2FF; box-shadow:0 6px 20px rgba(0,194,255,0.15); }
+        .paso-num {
+            min-width:42px; height:42px; border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            font-family:'Fredoka One',cursive; font-size:1.15rem; color:#fff; flex-shrink:0;
+        }
+        .paso-item:nth-child(1) .paso-num { background:linear-gradient(135deg,#0097c4,#00C2FF); }
+        .paso-item:nth-child(2) .paso-num { background:linear-gradient(135deg,#FF6B35,#FFD600); }
+        .paso-item:nth-child(3) .paso-num { background:linear-gradient(135deg,#00D68F,#00C2FF); }
+        .paso-item:nth-child(4) .paso-num { background:linear-gradient(135deg,var(--morado),var(--rosa)); }
+        .paso-body strong { color:var(--azul-oscuro); font-size:0.98rem; display:block; margin-bottom:2px; }
+        .paso-body span   { color:#666; font-size:0.87rem; font-weight:600; }
+
+        /* QUOTE */
+        .quote-box {
+            background:linear-gradient(135deg,#E8FAFF,#D4FFF0);
+            border-left:6px solid var(--celeste); border-radius:0 20px 20px 0;
+            padding:18px 22px; font-size:1rem; font-weight:700; color:var(--azul-oscuro);
+            box-shadow:0 4px 18px rgba(0,194,255,0.2);
+        }
+
+        /* ACCORDION */
+        .accordion-kids .accordion-button {
+            font-family:'Fredoka One',cursive; font-size:1.05rem;
+            color:var(--azul-oscuro); background:#E8FAFF; border-radius:16px !important; box-shadow:none;
+        }
+        .accordion-kids .accordion-button:not(.collapsed) {
+            background:linear-gradient(90deg,#0097c4,var(--verde)); color:#fff;
+        }
+        .accordion-kids .accordion-item { border:none; border-radius:16px !important; margin-bottom:10px; overflow:hidden; }
+        .accordion-kids .accordion-body  { background:#F0FFFE; font-weight:600; color:#444; border-radius:0 0 16px 16px; }
+
+        /* BUTTONS */
+        .btn-juego {
+            font-family:'Fredoka One',cursive; font-size:1.2rem; letter-spacing:1px;
+            background:linear-gradient(90deg, var(--celeste), var(--verde));
+            color:#fff; border:none; border-radius:50px; padding:14px 42px;
+            box-shadow:0 8px 28px rgba(0,194,255,0.45); transition:transform 0.25s,box-shadow 0.25s;
+            text-decoration:none; display:inline-flex; align-items:center;
+        }
+        .btn-juego:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 16px 40px rgba(0,194,255,0.5); color:#fff; }
+
+        .btn-completar {
+            font-family:'Fredoka One',cursive; font-size:1.2rem;
+            background:linear-gradient(90deg,var(--verde),#0097c4);
+            color:#fff; border:none; border-radius:50px; padding:14px 42px;
+            box-shadow:0 8px 28px rgba(0,214,143,0.45); transition:transform 0.25s;
+            cursor:pointer;
+        }
+        .btn-completar:hover { transform:translateY(-4px) scale(1.03); color:#fff; }
+
+        .btn-back {
+            font-family:'Fredoka One',cursive; font-size:1.05rem;
+            background:rgba(255,255,255,0.12); border:2px solid rgba(255,255,255,0.3);
+            color:#fff; border-radius:50px; padding:13px 32px;
+            transition:all 0.25s; backdrop-filter:blur(6px); text-decoration:none;
+            display:inline-flex; align-items:center;
+        }
+        .btn-back:hover { background:rgba(255,255,255,0.22); color:#fff; transform:translateY(-3px); }
+
+        .footer-card {
+            position:relative; z-index:1; background:rgba(255,255,255,0.07);
+            border:1px solid rgba(255,255,255,0.15); border-radius:20px;
+            padding:16px 24px; color:rgba(255,255,255,0.55); font-size:0.85rem;
+            text-align:center; backdrop-filter:blur(8px);
+        }
+        .footer-card a { color:var(--amarillo); text-decoration:none; font-weight:700; }
+
+        @media(max-width:576px) { .main-card{padding:24px 16px;} .hero-emoji{font-size:4.5rem;} }
+    </style>
+</head>
+<body>
+
+<div class="bubbles">
+    <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+    <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+</div>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="navbar navbar-expand-lg navbar-kids">
+    <div class="container">
+        <a class="navbar-brand navbar-brand-kids" href="{% url 'index' %}">💰 FinanceKids</a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span style="color:#fff;font-size:1.5rem;"><i class="bi bi-list"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto gap-2 align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link-kids" href="{% url 'index' %}"><i class="bi bi-house-fill me-1"></i>Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-kids" href="{% url 'juego2' %}"><i class="bi bi-controller me-1"></i>Juego</a>
+                </li>
+                <li class="nav-item ms-2">
+                    <div class="user-chip">
+                        <div class="user-avatar">{{ request.user.username|first|upper }}</div>
+                        {{ request.user.username }}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-kids" href="{% url 'logout' %}" style="color:rgba(255,150,150,0.9)!important;">
+                        <i class="bi bi-box-arrow-right me-1"></i>Salir
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-7">
+                <div class="hero-badge"><i class="bi bi-lightning-fill me-1"></i>Lección 2 · Básico</div>
+                <h1 class="hero-title mb-3">El <span>Presupuesto</span></h1>
+                <p class="hero-subtitle mb-4">
+                    Aprende a organizar tu dinero, planear tus gastos y alcanzar tus metas ahorrando. 🎯
+                </p>
+                <div class="progress-card">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="progress-label">
+                            <i class="bi bi-bar-chart-fill me-2"></i>Progreso de {{ request.user.username }}
+                        </span>
+                        <span class="fw-bold" style="color:var(--celeste);font-size:0.9rem;">Tema 2 de 10 🎯</span>
+                    </div>
+                    <div class="progress progress-kids">
+                        <div class="progress-bar" style="width:20%"></div>
+                    </div>
+                    <small class="text-white-50 mt-2 d-block fw-bold">¡Ya completaste el Tema 1! Sigue así 🔥</small>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center">
+                <div class="hero-emoji">📊</div>
+                <div class="d-flex justify-content-center gap-2 mt-3 flex-wrap">
+                    <span class="badge rounded-pill px-3 py-2 fw-bold" style="background:rgba(0,194,255,.2);color:var(--celeste);border:2px solid rgba(0,194,255,.4);">
+                        <i class="bi bi-clock me-1"></i>12 min
+                    </span>
+                    <span class="badge rounded-pill px-3 py-2 fw-bold" style="background:rgba(0,214,143,.2);color:var(--verde);border:2px solid rgba(0,214,143,.4);">
+                        <i class="bi bi-emoji-smile me-1"></i>Fácil
+                    </span>
+                    <span class="badge rounded-pill px-3 py-2 fw-bold" style="background:rgba(255,214,0,.2);color:var(--amarillo);border:2px solid rgba(255,214,0,.4);">
+                        <i class="bi bi-star me-1"></i>+75 pts
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== CONTENIDO PRINCIPAL ===================== -->
+<section class="py-3">
+    <div class="container">
+        <div class="main-card">
+
+            <!-- DEFINICIÓN -->
+            <div class="section-pill"><i class="bi bi-lightbulb-fill"></i> ¿Qué es un presupuesto?</div>
+            <p class="fs-5 fw-bold text-dark mb-3">
+                Un <strong style="color:#0097c4">presupuesto</strong> es una herramienta que te ayuda a saber cuánto dinero tienes,
+                cuánto gastas y cuánto puedes <strong style="color:var(--verde)">ahorrar</strong>.
+                Aprender a hacerlo te permite organizar mejor tu dinero y cumplir tus metas sin gastar más de lo necesario.
+            </p>
+
+            <!-- GIF + QUOTE -->
+            <div class="row g-4 mb-4 align-items-center">
+                <div class="col-md-4">
+                    <div class="gif-card">
+                        <img src="https://media.tenor.com/5cqu6Luv51sAAAAi/buy-burn.gif" alt="Presupuesto animado">
+                        <span class="gif-label">¡Controla tu dinero! 💸</span>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="quote-box mb-3">
+                        💡 <span class="ms-2">Un presupuesto no te limita — te da el poder de decidir a dónde va tu dinero <strong>antes</strong> de gastarlo.</span>
+                    </div>
+                    <div class="quote-box" style="border-left-color:var(--verde);">
+                        🎯 <span class="ms-2">Las personas que hacen presupuesto <strong>ahorran 3 veces más</strong> que las que no lo hacen.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REGLA 50-30-20 -->
+            <div class="section-pill"><i class="bi bi-pie-chart-fill"></i> La Regla 50 - 30 - 20</div>
+            <p class="fw-bold text-secondary mb-3">Una forma fácil de organizar tu dinero cada mes:</p>
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="regla-card regla-necesidades">
+                        <div class="regla-pct">50%</div>
+                        <div class="regla-titulo">🏠 Necesidades</div>
+                        <div class="regla-desc">Comida, transporte, colegio — lo que <em>sí o sí</em> necesitas.</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="regla-card regla-deseos">
+                        <div class="regla-pct">30%</div>
+                        <div class="regla-titulo">🎮 Deseos</div>
+                        <div class="regla-desc">Juegos, dulces, salidas — las cosas que te dan felicidad.</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="regla-card regla-ahorro">
+                        <div class="regla-pct">20%</div>
+                        <div class="regla-titulo">🐷 Ahorro</div>
+                        <div class="regla-desc">Guardado para tus metas o para emergencias del futuro.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASOS PARA HACER UN PRESUPUESTO -->
+            <div class="section-pill"><i class="bi bi-list-check"></i> ¿Cómo hacer un presupuesto?</div>
+            <div class="mb-4">
+                <div class="paso-item">
+                    <div class="paso-num">1</div>
+                    <div class="paso-body">
+                        <strong>💵 Anota cuánto dinero tienes</strong>
+                        <span>Puede ser tu mesada, lo que te regalaron o lo que ganaste ayudando en casa.</span>
+                    </div>
+                </div>
+                <div class="paso-item">
+                    <div class="paso-num">2</div>
+                    <div class="paso-body">
+                        <strong>📝 Lista tus gastos</strong>
+                        <span>Escribe todo lo que piensas comprar o pagar durante el mes.</span>
+                    </div>
+                </div>
+                <div class="paso-item">
+                    <div class="paso-num">3</div>
+                    <div class="paso-body">
+                        <strong>⚖️ Compara ingresos y gastos</strong>
+                        <span>Si gastas más de lo que tienes, debes recortar algunos deseos.</span>
+                    </div>
+                </div>
+                <div class="paso-item">
+                    <div class="paso-num">4</div>
+                    <div class="paso-body">
+                        <strong>🐷 Separa tu ahorro primero</strong>
+                        <span>El truco de los expertos: ¡ahorra antes de gastar, no después!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CURIOSIDADES -->
+            <div class="section-pill"><i class="bi bi-emoji-laughing-fill"></i> ¿Sabías que...?</div>
+            <div class="accordion accordion-kids mb-4" id="curiosidades">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                            🏛️ Los presupuestos tienen 4,000 años de historia
+                        </button>
+                    </h2>
+                    <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#curiosidades">
+                        <div class="accordion-body">
+                            Los antiguos egipcios ya hacían listas de sus cosechas y gastos en papiro. ¡Presupuestar es una de las habilidades más antiguas de la humanidad!
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                            📱 Hoy existen apps de presupuesto para niños
+                        </button>
+                    </h2>
+                    <div id="c2" class="accordion-collapse collapse" data-bs-parent="#curiosidades">
+                        <div class="accordion-body">
+                            Aplicaciones como <strong>PiggyBot</strong> y <strong>Greenlight</strong> están diseñadas para que los niños aprendan a organizar su dinero de forma divertida.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                            🌍 La palabra "presupuesto" viene del latín
+                        </button>
+                    </h2>
+                    <div id="c3" class="accordion-collapse collapse" data-bs-parent="#curiosidades">
+                        <div class="accordion-body">
+                            Viene de <em>"praesupponere"</em>, que significa <strong>"suponer de antemano"</strong>. ¡Es básicamente predecir el futuro de tu dinero!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTONES -->
+            <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center pt-2 flex-wrap">
+
+                <a href="{% url 'index' %}" class="btn btn-back">
+                    <i class="bi bi-arrow-left me-2"></i>Menú principal
+                </a>
+
+                <a href="{% url 'juego2' %}" class="btn btn-juego">
+                    <i class="bi bi-controller me-2"></i>¡Ir al Juego 2!
+                </a>
+
+                <form method="POST" action="{% url 'completar_tema' tema=2 %}" class="m-0">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-completar">
+                        ✅ ¡Lo aprendí! Siguiente tema
+                    </button>
+                </form>
+
+            </div>
+
+        </div><!-- /main-card -->
+    </div>
+</section>
+
+<!-- FOOTER -->
+<div class="container pb-4 mt-3">
+    <div class="footer-card">
+        Hola, <strong style="color:var(--amarillo)">{{ request.user.username }}</strong> 👋 ·
+        <a href="{% url 'index' %}">Mis temas</a> ·
+        <a href="{% url 'logout' %}">Cerrar sesión</a> ·
+        © 2025 FinanceKids 💰
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, i * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.regla-card, .paso-item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(el);
+    });
+</script>
+</body>
+</html>
