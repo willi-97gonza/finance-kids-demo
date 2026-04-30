@@ -1,0 +1,636 @@
+/* ============================================================
+   login.css — Estilos para la página de inicio de sesión
+   Finance Kids · Paleta "Cielo de Verano"
+   ============================================================ */
+
+
+/* ------------------------------------------------------------------
+   VARIABLES DE COLOR
+   Aquí guardamos los colores de la marca para usarlos fácilmente.
+   Si quieres cambiar un color, solo lo cambias aquí y se aplica
+   en toda la página automáticamente.
+------------------------------------------------------------------ */
+:root {
+    --azul-persa:    #072ac8;   /* Azul oscuro principal */
+    --azul-dodger:   #1e96fc;   /* Azul brillante para botones y acentos */
+    --azul-helado:   #a2d6f9;   /* Azul claro suave para textos secundarios */
+    --limon:         #fcf300;   /* Amarillo limón para resaltar palabras clave */
+    --amarillo-bus:  #ffc600;   /* Amarillo dorado para degradados y detalles */
+    --blanco:        #ffffff;
+    --gris-claro:    #f4f7ff;   /* Fondo de inputs */
+    --gris-texto:    #64748b;   /* Texto secundario gris */
+    --error-rojo:    #dc2626;
+}
+
+
+/* ------------------------------------------------------------------
+   RESET BÁSICO
+   Elimina márgenes y bordes predeterminados del navegador,
+   y hace que el tamaño de los elementos incluya el borde (border-box).
+------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ------------------------------------------------------------------
+   BODY
+   Ocupa toda la pantalla, muestra un degradado de fondo azul,
+   y centra el contenido verticalmente.
+------------------------------------------------------------------ */
+body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #020f5e 0%, #072ac8 50%, #1e96fc 100%);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+
+/* ------------------------------------------------------------------
+   ESTRELLAS ANIMADAS (fondo)
+   Creamos un efecto de estrellas con tres capas de puntos blancos
+   que se mueven hacia arriba lentamente, como el cielo nocturno.
+   Usamos ::before y ::after del body para no agregar HTML extra.
+------------------------------------------------------------------ */
+
+/* Capa 1 de estrellas — pequeñas y rápidas */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;                       /* Cubre toda la pantalla */
+    pointer-events: none;           /* No bloquea clics del usuario */
+    z-index: 0;
+    background-image:
+        radial-gradient(1px 1px at 10%  20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30%  5%,  rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55%  40%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75%  15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90%  60%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20%  75%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 42%  85%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65%  55%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 82%  30%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5%   90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(2px 2px at 48%  12%, rgba(252,243,0,0.7)   0%, transparent 100%),
+        radial-gradient(2px 2px at 78%  80%, rgba(255,198,0,0.6)   0%, transparent 100%),
+        radial-gradient(2px 2px at 22%  50%, rgba(252,243,0,0.5)   0%, transparent 100%);
+    background-size: 100% 100%;
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+/* Capa 2 de estrellas — medianas, velocidad media */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(1.5px 1.5px at 15%  35%, rgba(162,214,249,0.8) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 38%  65%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60%  25%, rgba(162,214,249,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85%  45%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 25%  88%, rgba(162,214,249,0.6) 0%, transparent 100%),
+        radial-gradient(2.5px 2.5px at 70%  70%, rgba(252,243,0,0.5)   0%, transparent 100%),
+        radial-gradient(1px   1px   at 50%  50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px   1px   at 8%   55%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px   1px   at 93%  18%, rgba(162,214,249,0.7) 0%, transparent 100%);
+    animation: twinkle 6s ease-in-out infinite alternate-reverse;
+}
+
+/* Animación de parpadeo para las estrellas */
+@keyframes twinkle {
+    0%   { opacity: 0.4; transform: scale(1); }
+    50%  { opacity: 0.9; }
+    100% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* Estrellas que "caen" desde arriba (efecto lluvia de estrellas) */
+.stars-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Cada estrella individual que cae */
+.star {
+    position: absolute;
+    top: -10px;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: starFall linear infinite;
+    opacity: 0;
+}
+
+/* Le damos a cada estrella una posición y velocidad diferente */
+.star:nth-child(1)  { left: 8%;  animation-duration: 8s;  animation-delay: 0s;   width: 2px; height: 2px; background: var(--limon); }
+.star:nth-child(2)  { left: 18%; animation-duration: 12s; animation-delay: 2s;   width: 1px; height: 1px; }
+.star:nth-child(3)  { left: 27%; animation-duration: 7s;  animation-delay: 5s;   width: 3px; height: 3px; background: var(--azul-helado); }
+.star:nth-child(4)  { left: 40%; animation-duration: 10s; animation-delay: 1s;   width: 1px; height: 1px; }
+.star:nth-child(5)  { left: 53%; animation-duration: 9s;  animation-delay: 3s;   width: 2px; height: 2px; background: var(--amarillo-bus); }
+.star:nth-child(6)  { left: 65%; animation-duration: 13s; animation-delay: 6s;   width: 1px; height: 1px; }
+.star:nth-child(7)  { left: 74%; animation-duration: 8s;  animation-delay: 4s;   width: 3px; height: 3px; }
+.star:nth-child(8)  { left: 83%; animation-duration: 11s; animation-delay: 1.5s; width: 1px; height: 1px; background: var(--limon); }
+.star:nth-child(9)  { left: 92%; animation-duration: 7s;  animation-delay: 7s;   width: 2px; height: 2px; }
+.star:nth-child(10) { left: 3%;  animation-duration: 15s; animation-delay: 9s;   width: 1px; height: 1px; background: var(--azul-helado); }
+.star:nth-child(11) { left: 35%; animation-duration: 6s;  animation-delay: 2.5s; width: 2px; height: 2px; }
+.star:nth-child(12) { left: 58%; animation-duration: 10s; animation-delay: 8s;   width: 3px; height: 3px; background: var(--amarillo-bus); }
+
+/* Movimiento de caída de las estrellas */
+@keyframes starFall {
+    0%   { transform: translateY(-10px) translateX(0);    opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.7; }
+    100% { transform: translateY(110vh) translateX(20px); opacity: 0; }
+}
+
+
+/* ------------------------------------------------------------------
+   BARRA DE NAVEGACIÓN
+   Franja superior con el logo de Finance Kids.
+   Usa un fondo semitransparente con efecto de vidrio (backdrop-filter).
+------------------------------------------------------------------ */
+.navbar-kids {
+    position: relative;
+    z-index: 10;                            /* Queda encima de las estrellas */
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);            /* Efecto vidrio esmerilado */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 0;
+}
+
+/* Logo en texto de la navbar */
+.navbar-brand-kids {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7rem;
+    color: var(--limon);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+}
+
+/* Imagen del logo en la navbar */
+.navbar-brand-kids img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+    /* El logo tiene fondo transparente, se ve bien sobre cualquier color */
+}
+
+
+/* ------------------------------------------------------------------
+   ZONA CENTRAL (main-wrap)
+   Contenedor que centra la tarjeta de login en la pantalla.
+------------------------------------------------------------------ */
+.main-wrap {
+    position: relative;
+    z-index: 1;
+    flex: 1;                                /* Ocupa todo el espacio disponible */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+}
+
+
+/* ------------------------------------------------------------------
+   TARJETA DE LOGIN
+   La tarjeta blanca/azul que contiene el formulario y la mascota.
+   Usa CSS Grid para dividirla en dos columnas iguales.
+------------------------------------------------------------------ */
+.login-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;         /* Dos columnas: form | mascota */
+    max-width: 980px;
+    width: 100%;
+    border-radius: 28px;
+    overflow: hidden;                       /* Oculta lo que salga del borde redondeado */
+    box-shadow: 0 32px 90px rgba(2, 15, 94, 0.5);
+    animation: cardEntrada 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Animación de entrada de la tarjeta (sube suavemente al cargar) */
+@keyframes cardEntrada {
+    from { opacity: 0; transform: translateY(40px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+
+/* ==================================================================
+   LADO IZQUIERDO — FORMULARIO
+   Fondo blanco limpio con todos los campos de inicio de sesión.
+================================================================== */
+.login-left {
+    padding: 50px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ffffff;
+}
+
+
+/* ------------------------------------------------------------------
+   LOGO dentro del formulario
+   Muestra la imagen del logo de Finance Kids arriba del formulario.
+------------------------------------------------------------------ */
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+/* La imagen del logo */
+.logo-wrap img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+
+/* ------------------------------------------------------------------
+   TÍTULO Y SUBTÍTULO del formulario
+------------------------------------------------------------------ */
+.login-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--azul-persa);
+    margin-bottom: 6px;
+}
+
+.login-sub {
+    color: var(--gris-texto);
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-bottom: 26px;
+}
+
+
+/* ------------------------------------------------------------------
+   CAJA DE ERROR
+   Aparece cuando el usuario pone un usuario o contraseña incorrectos.
+   Tiene una animación de "sacudida" para llamar la atención.
+------------------------------------------------------------------ */
+.error-box {
+    background: #fef2f2;
+    border: 2px solid #fca5a5;
+    border-radius: 12px;
+    padding: 11px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: #991b1b;
+    font-size: 0.9rem;
+    animation: sacudir 0.4s ease;
+}
+
+/* Animación de sacudida horizontal */
+@keyframes sacudir {
+    0%, 100% { transform: translateX(0); }
+    20%      { transform: translateX(-5px); }
+    40%      { transform: translateX(5px); }
+    60%      { transform: translateX(-3px); }
+    80%      { transform: translateX(3px); }
+}
+
+
+/* ------------------------------------------------------------------
+   CAMPOS DE TEXTO (inputs)
+   Cada campo tiene un ícono a la izquierda y un borde animado al enfocarse.
+------------------------------------------------------------------ */
+
+/* Contenedor de cada campo (posición relativa para el ícono) */
+.input-group-kids {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+/* Ícono decorativo dentro del campo */
+.input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    pointer-events: none;                   /* No interfiere con el clic */
+    transition: color 0.25s;
+}
+
+/* El campo de texto en sí */
+.input-kids {
+    width: 100%;
+    padding: 14px 16px 14px 46px;          /* Espacio a la izquierda para el ícono */
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 600;
+    background: var(--gris-claro);
+    color: var(--azul-persa);
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    outline: none;
+}
+
+/* Efecto al hacer clic en el campo (focus) */
+.input-kids:focus {
+    border-color: var(--azul-dodger);
+    box-shadow: 0 0 0 4px rgba(30, 150, 252, 0.15);
+    background: #ffffff;
+}
+
+/* El ícono cambia de color cuando el campo está activo */
+.input-group-kids:focus-within .input-icon {
+    color: var(--azul-dodger);
+}
+
+
+/* ------------------------------------------------------------------
+   BOTÓN MOSTRAR/OCULTAR CONTRASEÑA (ojito)
+------------------------------------------------------------------ */
+.eye-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    padding: 0;
+    transition: color 0.2s;
+}
+.eye-btn:hover { color: var(--azul-dodger); }
+
+
+/* ------------------------------------------------------------------
+   BOTÓN PRINCIPAL — INGRESAR
+   Degradado azul llamativo con sombra y efecto de levitación al pasar el cursor.
+------------------------------------------------------------------ */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, var(--azul-persa), var(--azul-dodger));
+    color: var(--blanco);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(7, 42, 200, 0.35);
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+/* Efecto al pasar el cursor: se eleva un poco */
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(7, 42, 200, 0.45);
+}
+
+/* Efecto al hacer clic: vuelve a su posición */
+.btn-submit:active { transform: translateY(0); }
+
+
+/* ------------------------------------------------------------------
+   LÍNEA DIVISORA entre botones
+------------------------------------------------------------------ */
+.divider-text {
+    text-align: center;
+    color: #cbd5e1;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 12px 0;
+    letter-spacing: 1px;
+}
+
+
+/* ------------------------------------------------------------------
+   BOTÓN SECUNDARIO — CREAR CUENTA
+   Borde azul, sin relleno. Al pasar el cursor se rellena de azul.
+------------------------------------------------------------------ */
+.btn-registro {
+    width: 100%;
+    padding: 13px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    background: transparent;
+    color: var(--azul-dodger);
+    border: 2px solid var(--azul-dodger);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-registro:hover {
+    background: var(--azul-dodger);
+    color: var(--blanco);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(30, 150, 252, 0.35);
+}
+
+
+/* ==================================================================
+   LADO DERECHO — MASCOTA KIBO
+   Fondo azul degradado con la imagen de Kibo y una lista de features.
+================================================================== */
+.login-right {
+    background: linear-gradient(145deg, #020f5e 0%, #072ac8 55%, #1e96fc 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 44px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Brillo decorativo circular detrás de Kibo */
+.login-right::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 340px;
+    height: 340px;
+    background: radial-gradient(circle, rgba(30, 150, 252, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Destellos de estrellas decorativas en el panel derecho */
+.login-right::after {
+    content: '★ ✦ ★ ✦ ★';
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(252, 243, 0, 0.35);
+    font-size: 1rem;
+    letter-spacing: 8px;
+    pointer-events: none;
+}
+
+
+/* ------------------------------------------------------------------
+   IMAGEN DE KIBO (la mascota)
+   Flota suavemente de arriba a abajo como si estuviera en el aire.
+------------------------------------------------------------------ */
+.mascota-wrap {
+    position: relative;
+    z-index: 1;
+}
+
+.mascota-wrap img {
+    width: 230px;
+    height: auto;
+    /* drop-shadow crea una sombra que sigue la forma real de la imagen */
+    filter: drop-shadow(0 20px 40px rgba(2, 15, 94, 0.5));
+    animation: kiboFlota 3.5s ease-in-out infinite;
+}
+
+/* Animación de flotación suave */
+@keyframes kiboFlota {
+    0%, 100% { transform: translateY(0)    rotate(-1deg); }
+    50%       { transform: translateY(-14px) rotate(1deg); }
+}
+
+
+/* ------------------------------------------------------------------
+   TEXTOS DEL PANEL DERECHO
+------------------------------------------------------------------ */
+.mascota-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    color: var(--blanco);
+    margin-top: 18px;
+    line-height: 1.25;
+}
+
+/* Palabra resaltada en amarillo dentro del título */
+.mascota-title span {
+    color: var(--limon);
+}
+
+.mascota-sub {
+    position: relative;
+    z-index: 1;
+    color: var(--azul-helado);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+
+/* ------------------------------------------------------------------
+   LISTA DE CARACTERÍSTICAS (los 4 bullets del panel derecho)
+------------------------------------------------------------------ */
+.features-list {
+    position: relative;
+    z-index: 1;
+    list-style: none;
+    margin-top: 22px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Cada ítem de la lista */
+.features-list li {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: left;
+    transition: background 0.2s, transform 0.2s;
+}
+
+/* Al pasar el cursor se ilumina un poco */
+.features-list li:hover {
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateX(4px);
+}
+
+/* El emoji de cada ítem */
+.features-list li span {
+    font-size: 1.2rem;
+}
+
+
+/* ------------------------------------------------------------------
+   BARRA DE PIE DE PÁGINA (footer)
+------------------------------------------------------------------ */
+.footer-bar {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+
+/* ==================================================================
+   RESPONSIVO — MÓVIL
+   En pantallas pequeñas (celulares) ocultamos el panel derecho
+   y el formulario ocupa todo el ancho.
+================================================================== */
+@media (max-width: 768px) {
+    /* La tarjeta pasa de 2 columnas a 1 columna */
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ocultamos el panel de Kibo en móviles para ahorrar espacio */
+    .login-right {
+        display: none;
+    }
+
+    /* Reducimos el padding del formulario */
+    .login-left {
+        padding: 36px 28px;
+    }
+}
+
+@media (max-width: 420px) {
+    .login-left {
+        padding: 28px 20px;
+    }
+}
