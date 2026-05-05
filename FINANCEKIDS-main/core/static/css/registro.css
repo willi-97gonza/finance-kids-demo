@@ -1,0 +1,667 @@
+/* ============================================================
+   registro.css — Estilos para la página de registro
+   Finance Kids · Paleta "Cielo de Verano"
+   ============================================================ */
+
+/* ------------------------------------------------------------------
+   VARIABLES DE COLOR — misma paleta que login.css
+------------------------------------------------------------------ */
+:root {
+    --azul-persa:    #072ac8;
+    --azul-dodger:   #1e96fc;
+    --azul-helado:   #a2d6f9;
+    --limon:         #fcf300;
+    --amarillo-bus:  #ffc600;
+    --blanco:        #ffffff;
+    --gris-claro:    #f4f7ff;
+    --gris-texto:    #64748b;
+    --error-rojo:    #dc2626;
+    --azul-oscuro:   #020f5e;
+    --verde-ok:      #00c97a;
+}
+
+/* ------------------------------------------------------------------
+   RESET
+------------------------------------------------------------------ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ------------------------------------------------------------------
+   BODY
+------------------------------------------------------------------ */
+body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #020f5e 0%, #072ac8 50%, #1e96fc 100%);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* ------------------------------------------------------------------
+   ESTRELLAS DE FONDO — misma técnica que login
+------------------------------------------------------------------ */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(4px 4px at 10%  20%, rgba(255,255,255,0.95) 0%, transparent 100%),
+        radial-gradient(3px 3px at 30%  5%,  rgba(255,255,255,0.90) 0%, transparent 100%),
+        radial-gradient(5px 5px at 55%  40%, rgba(255,255,255,1.00) 0%, transparent 100%),
+        radial-gradient(4px 4px at 75%  15%, rgba(255,255,255,0.85) 0%, transparent 100%),
+        radial-gradient(4px 4px at 90%  60%, rgba(255,255,255,0.95) 0%, transparent 100%),
+        radial-gradient(3px 3px at 20%  75%, rgba(255,255,255,0.80) 0%, transparent 100%),
+        radial-gradient(4px 4px at 42%  85%, rgba(255,255,255,0.90) 0%, transparent 100%),
+        radial-gradient(5px 5px at 82%  30%, rgba(255,255,255,1.00) 0%, transparent 100%),
+        radial-gradient(7px 7px at 48%  12%, rgba(252,243,0,0.95)   0%, transparent 100%),
+        radial-gradient(7px 7px at 78%  80%, rgba(255,198,0,0.90)   0%, transparent 100%),
+        radial-gradient(6px 6px at 22%  50%, rgba(252,243,0,0.85)   0%, transparent 100%);
+    background-size: 100% 100%;
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(5px 5px at 15%  35%, rgba(162,214,249,0.95) 0%, transparent 100%),
+        radial-gradient(4px 4px at 38%  65%, rgba(255,255,255,0.85) 0%, transparent 100%),
+        radial-gradient(5px 5px at 60%  25%, rgba(162,214,249,0.90) 0%, transparent 100%),
+        radial-gradient(8px 8px at 70%  70%, rgba(252,243,0,0.80)   0%, transparent 100%),
+        radial-gradient(5px 5px at 93%  18%, rgba(162,214,249,0.90) 0%, transparent 100%);
+    animation: twinkle 6s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes twinkle {
+    0%   { opacity: 0.5; transform: scale(1); }
+    50%  { opacity: 1; }
+    100% { opacity: 0.7; transform: scale(1.04); }
+}
+
+/* ------------------------------------------------------------------
+   NAVBAR
+------------------------------------------------------------------ */
+.navbar-kids {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 0;
+}
+
+.navbar-brand-kids {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7rem;
+    color: var(--limon);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand-kids img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ------------------------------------------------------------------
+   MAIN WRAP
+------------------------------------------------------------------ */
+.main-wrap {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 36px 16px 52px;
+}
+
+/* ------------------------------------------------------------------
+   TARJETA PRINCIPAL
+------------------------------------------------------------------ */
+.register-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    max-width: 1000px;
+    width: 100%;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 36px 100px rgba(2, 15, 94, 0.55);
+    animation: cardEntrada 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cardEntrada {
+    from { opacity: 0; transform: translateY(44px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ------------------------------------------------------------------
+   PANEL IZQUIERDO
+------------------------------------------------------------------ */
+.register-left {
+    background: linear-gradient(160deg, var(--azul-oscuro) 0%, var(--azul-persa) 55%, var(--azul-dodger) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px 36px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    border-right: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Destello decorativo detrás de Kibo */
+.register-left::before {
+    content: '';
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(30,150,252,0.35) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Estrellitas decorativas arriba */
+.register-left::after {
+    content: '★ ✦ ★ ✦ ★';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(252, 243, 0, 0.4);
+    font-size: 0.95rem;
+    letter-spacing: 7px;
+    pointer-events: none;
+}
+
+.mascota-wrap {
+    position: relative;
+    z-index: 1;
+    margin-top: 16px;
+}
+
+.mascota-wrap img {
+    width: 160px;
+    height: auto;
+    filter: drop-shadow(0 16px 36px rgba(2, 15, 94, 0.5));
+    animation: kiboFlota 3.5s ease-in-out infinite;
+}
+
+@keyframes kiboFlota {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50%       { transform: translateY(-12px) rotate(1deg); }
+}
+
+.brand-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: var(--blanco);
+    margin-top: 16px;
+    line-height: 1.25;
+}
+
+.brand-title span { color: var(--limon); }
+
+.brand-sub {
+    position: relative;
+    z-index: 1;
+    color: var(--azul-helado);
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+/* STEP TRACKER */
+.step-tracker {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 13px;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    transition: all 0.3s;
+}
+
+.step-item.active {
+    background: rgba(252, 243, 0, 0.15);
+    border-color: rgba(252, 243, 0, 0.40);
+}
+
+.step-item.done {
+    background: rgba(30, 150, 252, 0.15);
+    border-color: rgba(30, 150, 252, 0.30);
+}
+
+.step-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.78rem;
+    color: var(--blanco);
+    background: rgba(255, 255, 255, 0.15);
+    transition: background 0.3s;
+}
+
+.step-item.active .step-dot { background: var(--limon); color: var(--azul-oscuro); }
+.step-item.done   .step-dot { background: var(--azul-dodger); }
+
+.step-label {
+    color: rgba(255, 255, 255, 0.60);
+    font-size: 0.80rem;
+    font-weight: 700;
+}
+
+.step-item.active .step-label { color: var(--limon); }
+.step-item.done   .step-label { color: var(--blanco); }
+
+/* ------------------------------------------------------------------
+   PANEL DERECHO
+------------------------------------------------------------------ */
+.register-right {
+    background: var(--blanco);
+    padding: 44px 42px;
+    overflow-y: auto;
+}
+
+/* Logo en el panel derecho */
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.logo-wrap img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Título y subtítulo */
+.register-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--azul-oscuro);
+    margin-bottom: 4px;
+}
+
+.register-sub {
+    color: var(--gris-texto);
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 28px;
+}
+
+/* ------------------------------------------------------------------
+   ERROR GLOBAL
+------------------------------------------------------------------ */
+.error-global {
+    background: #fef2f2;
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: #7f1d1d;
+    font-size: 0.88rem;
+}
+
+/* ------------------------------------------------------------------
+   SECCIONES — PILLS
+------------------------------------------------------------------ */
+.form-section-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.95rem;
+    color: var(--blanco);
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+    margin-top: 4px;
+}
+
+.pill-cuenta   { background: linear-gradient(90deg, var(--azul-persa), var(--azul-dodger)); box-shadow: 0 4px 14px rgba(7,42,200,0.30); }
+.pill-personal { background: linear-gradient(90deg, var(--azul-dodger), #00c2ff);           box-shadow: 0 4px 14px rgba(30,150,252,0.30); }
+.pill-tutor    { background: linear-gradient(90deg, var(--amarillo-bus), var(--limon)); color: var(--azul-oscuro); box-shadow: 0 4px 14px rgba(255,198,0,0.30); }
+.pill-consent  { background: linear-gradient(90deg, var(--azul-persa), #4f46e5);            box-shadow: 0 4px 14px rgba(79,70,229,0.30); }
+
+/* ------------------------------------------------------------------
+   CAJAS DE SECCIÓN
+------------------------------------------------------------------ */
+.form-section-box {
+    background: var(--gris-claro);
+    border-radius: 18px;
+    padding: 22px 20px;
+    margin-bottom: 20px;
+    border: 2px solid transparent;
+    transition: border-color 0.25s;
+}
+
+.form-section-box:focus-within {
+    border-color: rgba(30, 150, 252, 0.30);
+}
+
+/* ------------------------------------------------------------------
+   FIELDS
+------------------------------------------------------------------ */
+.field-block { margin-bottom: 16px; }
+.field-block:last-child { margin-bottom: 0; }
+
+.field-label {
+    font-weight: 800;
+    font-size: 0.83rem;
+    color: var(--azul-oscuro);
+    margin-bottom: 6px;
+    display: block;
+}
+
+.input-wrap { position: relative; }
+
+.input-icon-left {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #bbb;
+    font-size: 0.95rem;
+    pointer-events: none;
+    transition: color 0.25s;
+}
+
+.input-wrap:focus-within .input-icon-left { color: var(--azul-dodger); }
+
+.field-input {
+    width: 100%;
+    padding: 11px 13px 11px 40px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 600;
+    background: var(--blanco);
+    color: var(--azul-oscuro);
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.field-input:focus {
+    border-color: var(--azul-dodger);
+    box-shadow: 0 0 0 3px rgba(30, 150, 252, 0.12);
+}
+
+.field-input.field-error {
+    border-color: var(--error-rojo);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.10);
+}
+
+.field-select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 600;
+    background: var(--blanco);
+    color: var(--azul-oscuro);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.field-select:focus {
+    border-color: var(--azul-dodger);
+    box-shadow: 0 0 0 3px rgba(30, 150, 252, 0.12);
+}
+
+.field-select.field-error { border-color: var(--error-rojo); }
+
+/* Botón ojito */
+.eye-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #bbb;
+    font-size: 0.95rem;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.eye-btn:hover { color: var(--azul-dodger); }
+
+/* Hints y errores de campo */
+.hint-text {
+    font-size: 0.76rem;
+    color: #aaa;
+    font-weight: 700;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.hint-text.required { color: #f87171; }
+
+.error-msg {
+    background: #fef2f2;
+    border: 1.5px solid rgba(220,38,38,0.3);
+    border-radius: 10px;
+    padding: 6px 11px;
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: #7f1d1d;
+    animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25%      { transform: translateX(-4px); }
+    75%      { transform: translateX(4px); }
+}
+
+/* ------------------------------------------------------------------
+   BARRA DE SEGURIDAD CONTRASEÑA
+------------------------------------------------------------------ */
+.strength-wrap { margin-top: 9px; }
+
+.strength-bar {
+    height: 8px;
+    border-radius: 50px;
+    background: #e2e8f0;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.strength-fill {
+    height: 100%;
+    border-radius: 50px;
+    width: 0%;
+    transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+.strength-text {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #aaa;
+    transition: color 0.4s;
+}
+
+/* ------------------------------------------------------------------
+   CHECKBOXES
+------------------------------------------------------------------ */
+.check-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--gris-claro);
+    border: 2px solid transparent;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: border-color 0.25s, background 0.25s;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+.check-row:hover {
+    border-color: rgba(30, 150, 252, 0.30);
+    background: #e8f4fe;
+}
+
+.check-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    accent-color: var(--azul-dodger);
+    cursor: pointer;
+    margin-top: 1px;
+}
+
+/* ------------------------------------------------------------------
+   DIVISOR
+------------------------------------------------------------------ */
+.form-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+    margin: 22px 0;
+}
+
+/* ------------------------------------------------------------------
+   BOTONES
+------------------------------------------------------------------ */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, var(--azul-persa), var(--azul-dodger));
+    color: var(--blanco);
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 6px 22px rgba(7, 42, 200, 0.35);
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+    margin-bottom: 12px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(7, 42, 200, 0.45);
+}
+
+.btn-submit:active { transform: translateY(0); }
+
+.btn-login-link {
+    width: 100%;
+    padding: 13px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--azul-dodger);
+    border: 2px solid var(--azul-dodger);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-login-link:hover {
+    background: var(--azul-dodger);
+    color: var(--blanco);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(30, 150, 252, 0.35);
+}
+
+.divider-text {
+    text-align: center;
+    color: #cbd5e1;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 12px 0;
+    letter-spacing: 1px;
+}
+
+/* ------------------------------------------------------------------
+   FOOTER
+------------------------------------------------------------------ */
+.footer-bar {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.80rem;
+    font-weight: 600;
+}
+
+/* ------------------------------------------------------------------
+   RESPONSIVO
+------------------------------------------------------------------ */
+@media (max-width: 860px) {
+    .register-container { grid-template-columns: 1fr; }
+    .register-left      { display: none; }
+    .register-right     { padding: 32px 22px; }
+}
+
+@media (max-width: 420px) {
+    .register-right { padding: 26px 16px; }
+}
