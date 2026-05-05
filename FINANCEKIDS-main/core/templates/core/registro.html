@@ -6,93 +6,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Cuenta - Finance Kids</title>
 
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fuentes Google -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+
+    <!-- Íconos Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS externo de registro -->
     <link rel="stylesheet" href="{% static 'css/registro.css' %}">
 </head>
 <body>
 
-    <!-- NAVBAR -->
+    <!-- ============================================================
+         NAVBAR
+    ============================================================ -->
     <nav class="navbar-kids">
         <div class="container">
             <a class="navbar-brand-kids" href="/">
                 <img src="{% static 'img/logo_finance_transparente.png' %}" alt="Finance Kids Logo">
-                Finance Kids
             </a>
         </div>
     </nav>
 
-    <!-- MAIN -->
+    <!-- ============================================================
+         ZONA CENTRAL
+    ============================================================ -->
     <div class="main-wrap">
         <div class="register-container">
 
             <!-- ================================================
-                 PANEL IZQUIERDO
+                 PANEL IZQUIERDO — Kibo + Step Tracker
             ================================================ -->
             <div class="register-left">
-                <div class="deco-circle deco-circle-1"></div>
-                <div class="deco-circle deco-circle-2"></div>
 
                 <div class="mascota-wrap">
-                    <img src="{% static 'img/kibo_sentado.png' %}" alt="Kibo">
+                    <img
+                        src="{% static 'img/kibo_sentado.png' %}"
+                        alt="Kibo - Mascota de Finance Kids"
+                    >
                 </div>
 
                 <h2 class="brand-title">¡Únete a la<br><span>aventura!</span></h2>
-                <p class="brand-sub">Completa los 4 pasos y empieza a aprender sobre finanzas con Kibo.</p>
+                <p class="brand-sub">Completa los 4 pasos y empieza a aprender sobre finanzas.</p>
 
                 <div class="step-tracker">
                     <div class="step-item active" id="step-1">
-                        <div class="step-dot"><i class="bi bi-person-fill"></i></div>
+                        <div class="step-dot"><i class="bi bi-person-fill" style="font-size:.7rem"></i></div>
                         <div class="step-label">Datos de cuenta</div>
                     </div>
                     <div class="step-item" id="step-2">
-                        <div class="step-dot"><i class="bi bi-card-text"></i></div>
+                        <div class="step-dot"><i class="bi bi-card-text" style="font-size:.7rem"></i></div>
                         <div class="step-label">Datos personales</div>
                     </div>
                     <div class="step-item" id="step-3">
-                        <div class="step-dot"><i class="bi bi-people-fill"></i></div>
+                        <div class="step-dot"><i class="bi bi-people-fill" style="font-size:.7rem"></i></div>
                         <div class="step-label">Datos del tutor</div>
                     </div>
                     <div class="step-item" id="step-4">
-                        <div class="step-dot"><i class="bi bi-shield-check-fill"></i></div>
+                        <div class="step-dot"><i class="bi bi-shield-check-fill" style="font-size:.7rem"></i></div>
                         <div class="step-label">Consentimientos</div>
                     </div>
                 </div>
+
             </div>
+            <!-- Fin panel izquierdo -->
 
             <!-- ================================================
-                 PANEL DERECHO
+                 PANEL DERECHO — Formulario
             ================================================ -->
-            <div class="register-right">
+            <div class="register-right" id="scroll-area">
 
-                <!-- Cabecera -->
-                <div class="panel-header">
-                    <div class="logo-wrap">
-                        <img src="{% static 'img/logo_finance_transparente.png' %}" alt="Logo">
-                    </div>
-                    <div>
-                        <div class="register-title">¡Crea tu cuenta! 🚀</div>
-                        <div class="register-sub">Completa cada sección y empieza tu aventura financiera.</div>
-                    </div>
+                <!-- Logo dentro del panel -->
+                <div class="logo-wrap">
+                    <img src="{% static 'img/logo_finance_transparente.png' %}" alt="Logo Finance Kids">
                 </div>
 
-                <!-- Tabs de navegación -->
-                <div class="section-tabs">
-                    <div class="section-tab active" data-tab="0">
-                        Cuenta <span class="tab-check"><i class="bi bi-check-circle-fill"></i></span>
-                    </div>
-                    <div class="section-tab" data-tab="1">
-                        Personal <span class="tab-check"><i class="bi bi-check-circle-fill"></i></span>
-                    </div>
-                    <div class="section-tab" data-tab="2">
-                        Tutor <span class="tab-check"><i class="bi bi-check-circle-fill"></i></span>
-                    </div>
-                    <div class="section-tab" data-tab="3">
-                        Consentimientos <span class="tab-check"><i class="bi bi-check-circle-fill"></i></span>
-                    </div>
-                </div>
+                <h1 class="register-title">¡Crea tu cuenta! 🚀</h1>
+                <p class="register-sub">Completa los 4 pasos y empieza tu aventura financiera hoy.</p>
 
+                <!-- Error global del formulario -->
                 {% if form.non_field_errors %}
                 <div class="error-global">
                     <i class="bi bi-exclamation-circle-fill"></i>
@@ -100,246 +95,278 @@
                 </div>
                 {% endif %}
 
-                <form method="POST" id="register-form">
+                <form method="POST">
                     {% csrf_token %}
 
-                    <!-- PANELES DE SECCIONES -->
-                    <div class="form-panels">
+                    <!-- ==== SECCIÓN 1: CUENTA ==== -->
+                    <div class="form-section-pill pill-cuenta">
+                        <i class="bi bi-person-badge-fill"></i> Datos de cuenta
+                    </div>
+                    <div class="form-section-box" id="box-1">
 
-                        <!-- ======= PANEL 0: CUENTA ======= -->
-                        <div class="form-panel active" id="panel-0">
-                            <div class="fields-grid col-2">
-
-                                <!-- Usuario -->
-                                <div class="field-block">
-                                    <label class="field-label" for="id_username">
-                                        <i class="bi bi-person-fill" style="color:var(--azul-dodger)"></i>
-                                        Nombre de usuario <span class="req">*</span>
-                                    </label>
-                                    {% if form.username.errors %}
-                                    <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.username.errors|striptags }}</div>
-                                    {% endif %}
-                                    <div class="input-wrap">
-                                        <i class="bi bi-person-fill input-icon-left"></i>
-                                        <input id="id_username"
-                                            class="field-input {% if form.username.errors %}field-error{% endif %}"
-                                            type="text" name="username"
-                                            placeholder="Ej: pingüino_financiero"
-                                            value="{{ form.username.value|default_if_none:'' }}"
-                                            autocomplete="username" required>
-                                    </div>
-                                </div>
-
-                                <!-- Espacio vacío para balancear -->
-                                <div></div>
-
-                                <!-- Contraseña -->
-                                <div class="field-block">
-                                    <label class="field-label" for="id_password1">
-                                        <i class="bi bi-lock-fill" style="color:var(--azul-dodger)"></i>
-                                        Contraseña <span class="req">*</span>
-                                    </label>
-                                    {% if form.password1.errors %}
-                                    <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.password1.errors|striptags }}</div>
-                                    {% endif %}
-                                    <div class="input-wrap">
-                                        <i class="bi bi-lock-fill input-icon-left"></i>
-                                        <input id="id_password1"
-                                            class="field-input {% if form.password1.errors %}field-error{% endif %}"
-                                            type="password" name="password1"
-                                            placeholder="Crea una contraseña segura"
-                                            autocomplete="new-password" required
-                                            oninput="checkStrength(this.value)">
-                                        <button type="button" class="eye-btn" onclick="togglePwd('id_password1','eye-1')">
-                                            <i class="bi bi-eye-fill" id="eye-1"></i>
-                                        </button>
-                                    </div>
-                                    <div class="strength-wrap">
-                                        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
-                                        <div class="strength-text" id="strengthText">Seguridad: pendiente</div>
-                                    </div>
-                                </div>
-
-                                <!-- Confirmar contraseña -->
-                                <div class="field-block">
-                                    <label class="field-label" for="id_password2">
-                                        <i class="bi bi-lock-fill" style="color:var(--azul-dodger)"></i>
-                                        Confirmar contraseña <span class="req">*</span>
-                                    </label>
-                                    {% if form.password2.errors %}
-                                    <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.password2.errors|striptags }}</div>
-                                    {% endif %}
-                                    <div class="input-wrap">
-                                        <i class="bi bi-lock-fill input-icon-left"></i>
-                                        <input id="id_password2"
-                                            class="field-input {% if form.password2.errors %}field-error{% endif %}"
-                                            type="password" name="password2"
-                                            placeholder="Repite tu contraseña"
-                                            autocomplete="new-password" required>
-                                        <button type="button" class="eye-btn" onclick="togglePwd('id_password2','eye-2')">
-                                            <i class="bi bi-eye-fill" id="eye-2"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
+                        <!-- Usuario -->
+                        <div class="field-block">
+                            <label class="field-label" for="id_username">
+                                Nombre de usuario <span style="color:#f87171">*</span>
+                            </label>
+                            {% if form.username.errors %}
+                            <div class="error-msg">
+                                <i class="bi bi-x-circle-fill"></i>{{ form.username.errors|striptags }}
+                            </div>
+                            {% endif %}
+                            <div class="input-wrap">
+                                <i class="bi bi-person-fill input-icon-left"></i>
+                                <input
+                                    id="id_username"
+                                    class="field-input {% if form.username.errors %}field-error{% endif %}"
+                                    type="text" name="username"
+                                    placeholder="Ej: pingüino_financiero"
+                                    value="{{ form.username.value|default_if_none:'' }}"
+                                    autocomplete="username" required
+                                >
                             </div>
                         </div>
 
-                        <!-- ======= PANEL 1: PERSONAL ======= -->
-                        <div class="form-panel" id="panel-1">
-                            <div class="fields-grid">
-
-                                <!-- Fecha nacimiento -->
-                                <div class="field-block">
-                                    <label class="field-label" for="id_fecha_nacimiento">
-                                        <i class="bi bi-calendar-heart-fill" style="color:var(--azul-dodger)"></i>
-                                        Fecha de nacimiento
-                                    </label>
-                                    {% if form.fecha_nacimiento.errors %}
-                                    <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.fecha_nacimiento.errors|striptags }}</div>
-                                    {% endif %}
-                                    <div class="input-wrap">
-                                        <i class="bi bi-calendar-heart-fill input-icon-left"></i>
-                                        <input id="id_fecha_nacimiento"
-                                            class="field-input {% if form.fecha_nacimiento.errors %}field-error{% endif %}"
-                                            type="date" name="fecha_nacimiento"
-                                            value="{{ form.fecha_nacimiento.value|default_if_none:'' }}">
-                                    </div>
+                        <!-- Contraseña -->
+                        <div class="field-block">
+                            <label class="field-label" for="id_password1">
+                                Contraseña <span style="color:#f87171">*</span>
+                            </label>
+                            {% if form.password1.errors %}
+                            <div class="error-msg">
+                                <i class="bi bi-x-circle-fill"></i>{{ form.password1.errors|striptags }}
+                            </div>
+                            {% endif %}
+                            <div class="input-wrap">
+                                <i class="bi bi-lock-fill input-icon-left"></i>
+                                <input
+                                    id="id_password1"
+                                    class="field-input {% if form.password1.errors %}field-error{% endif %}"
+                                    type="password" name="password1"
+                                    placeholder="Crea una contraseña segura"
+                                    autocomplete="new-password" required
+                                    oninput="checkStrength(this.value)"
+                                >
+                                <button type="button" class="eye-btn" onclick="togglePwd('id_password1','eye-1')">
+                                    <i class="bi bi-eye-fill" id="eye-1"></i>
+                                </button>
+                            </div>
+                            <div class="hint-text">
+                                <i class="bi bi-info-circle"></i> Usa 8+ caracteres, letras y números.
+                            </div>
+                            <div class="strength-wrap">
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="strengthFill"></div>
                                 </div>
+                                <div class="strength-text" id="strengthText">Seguridad: pendiente</div>
+                            </div>
+                        </div>
 
-                                <!-- Género -->
-                                <div class="field-block">
-                                    <label class="field-label" for="id_genero">
-                                        <i class="bi bi-gender-ambiguous" style="color:var(--azul-dodger)"></i>
-                                        Género
-                                    </label>
+                        <!-- Confirmar contraseña -->
+                        <div class="field-block">
+                            <label class="field-label" for="id_password2">
+                                Confirmar contraseña <span style="color:#f87171">*</span>
+                            </label>
+                            {% if form.password2.errors %}
+                            <div class="error-msg">
+                                <i class="bi bi-x-circle-fill"></i>{{ form.password2.errors|striptags }}
+                            </div>
+                            {% endif %}
+                            <div class="input-wrap">
+                                <i class="bi bi-lock-fill input-icon-left"></i>
+                                <input
+                                    id="id_password2"
+                                    class="field-input {% if form.password2.errors %}field-error{% endif %}"
+                                    type="password" name="password2"
+                                    placeholder="Repite tu contraseña"
+                                    autocomplete="new-password" required
+                                >
+                                <button type="button" class="eye-btn" onclick="togglePwd('id_password2','eye-2')">
+                                    <i class="bi bi-eye-fill" id="eye-2"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div><!-- fin box-1 -->
+
+                    <div class="form-divider"></div>
+
+                    <!-- ==== SECCIÓN 2: PERSONAL ==== -->
+                    <div class="form-section-pill pill-personal">
+                        <i class="bi bi-person-vcard-fill"></i> Datos personales
+                    </div>
+                    <div class="form-section-box" id="box-2">
+
+                        <!-- Fecha de nacimiento -->
+                        <div class="field-block">
+                            <label class="field-label" for="id_fecha_nacimiento">Fecha de nacimiento</label>
+                            {% if form.fecha_nacimiento.errors %}
+                            <div class="error-msg">
+                                <i class="bi bi-x-circle-fill"></i>{{ form.fecha_nacimiento.errors|striptags }}
+                            </div>
+                            {% endif %}
+                            <div class="input-wrap">
+                                <i class="bi bi-calendar-heart-fill input-icon-left"></i>
+                                <input
+                                    id="id_fecha_nacimiento"
+                                    class="field-input {% if form.fecha_nacimiento.errors %}field-error{% endif %}"
+                                    type="date" name="fecha_nacimiento"
+                                    value="{{ form.fecha_nacimiento.value|default_if_none:'' }}"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Género y País en dos columnas -->
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="field-block mb-0">
+                                    <label class="field-label" for="id_genero">Género</label>
                                     {% if form.genero.errors %}
-                                    <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.genero.errors|striptags }}</div>
+                                    <div class="error-msg">
+                                        <i class="bi bi-x-circle-fill"></i>{{ form.genero.errors|striptags }}
+                                    </div>
                                     {% endif %}
-                                    <select id="id_genero"
+                                    <select
+                                        id="id_genero"
                                         class="field-select {% if form.genero.errors %}field-error{% endif %}"
-                                        name="genero">
+                                        name="genero"
+                                    >
                                         <option value="" {% if not form.genero.value %}selected{% endif %}>Género (opcional)</option>
                                         <option value="M" {% if form.genero.value == 'M' %}selected{% endif %}>Masculino</option>
                                         <option value="F" {% if form.genero.value == 'F' %}selected{% endif %}>Femenino</option>
                                     </select>
                                 </div>
-
-                                <!-- País -->
-                                <div class="field-block">
-                                    <label class="field-label" for="id_pais">
-                                        <i class="bi bi-globe-americas" style="color:var(--azul-dodger)"></i>
-                                        País
-                                    </label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="field-block mb-0">
+                                    <label class="field-label" for="id_pais">País</label>
                                     {% if form.pais.errors %}
-                                    <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.pais.errors|striptags }}</div>
+                                    <div class="error-msg">
+                                        <i class="bi bi-x-circle-fill"></i>{{ form.pais.errors|striptags }}
+                                    </div>
                                     {% endif %}
                                     <div class="input-wrap">
                                         <i class="bi bi-globe-americas input-icon-left"></i>
-                                        <input id="id_pais"
+                                        <input
+                                            id="id_pais"
                                             class="field-input {% if form.pais.errors %}field-error{% endif %}"
                                             type="text" name="pais"
                                             placeholder="Ej: Colombia"
-                                            value="{{ form.pais.value|default_if_none:'' }}">
+                                            value="{{ form.pais.value|default_if_none:'' }}"
+                                        >
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
-                        <!-- ======= PANEL 2: TUTOR ======= -->
-                        <div class="form-panel" id="panel-2">
-                            <div class="fields-grid col-2">
+                    </div><!-- fin box-2 -->
 
-                                <!-- Nombre tutor -->
-                                <div class="field-block">
-                                    <label class="field-label" for="id_nombre_tutor">
-                                        <i class="bi bi-person-hearts" style="color:var(--azul-dodger)"></i>
-                                        Nombre del tutor <span class="req">*</span>
-                                    </label>
-                                    {% if form.nombre_tutor.errors %}
-                                    <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.nombre_tutor.errors|striptags }}</div>
-                                    {% endif %}
-                                    <div class="input-wrap">
-                                        <i class="bi bi-person-hearts input-icon-left"></i>
-                                        <input id="id_nombre_tutor"
-                                            class="field-input {% if form.nombre_tutor.errors %}field-error{% endif %}"
-                                            type="text" name="nombre_tutor"
-                                            placeholder="Nombre completo del tutor"
-                                            value="{{ form.nombre_tutor.value|default_if_none:'' }}" required>
-                                    </div>
-                                </div>
+                    <div class="form-divider"></div>
 
-                                <!-- Email tutor -->
-                                <div class="field-block">
-                                    <label class="field-label" for="id_email_tutor">
-                                        <i class="bi bi-envelope-fill" style="color:var(--azul-dodger)"></i>
-                                        Email del tutor <span class="req">*</span>
-                                    </label>
-                                    {% if form.email_tutor.errors %}
-                                    <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.email_tutor.errors|striptags }}</div>
-                                    {% endif %}
-                                    <div class="input-wrap">
-                                        <i class="bi bi-envelope-fill input-icon-left"></i>
-                                        <input id="id_email_tutor"
-                                            class="field-input {% if form.email_tutor.errors %}field-error{% endif %}"
-                                            type="email" name="email_tutor"
-                                            placeholder="correo@ejemplo.com"
-                                            value="{{ form.email_tutor.value|default_if_none:'' }}" required>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- ======= PANEL 3: CONSENTIMIENTOS ======= -->
-                        <div class="form-panel" id="panel-3">
-                            <div class="fields-grid col-1">
-
-                                {% if form.acepto_terminos.errors %}
-                                <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.acepto_terminos.errors|striptags }}</div>
-                                {% endif %}
-                                <label class="check-row">
-                                    <input type="checkbox" name="acepto_terminos"
-                                        {% if form.acepto_terminos.value %}checked{% endif %}>
-                                    <span>📋 Acepto los <strong>términos y condiciones</strong> de uso de Finance Kids.</span>
-                                </label>
-
-                                {% if form.consentimiento_tutor.errors %}
-                                <div class="error-msg"><i class="bi bi-x-circle-fill"></i>{{ form.consentimiento_tutor.errors|striptags }}</div>
-                                {% endif %}
-                                <label class="check-row">
-                                    <input type="checkbox" name="consentimiento_tutor"
-                                        {% if form.consentimiento_tutor.value %}checked{% endif %}>
-                                    <span>👨‍👩‍👧 Confirmo que cuento con el <strong>consentimiento de mi tutor</strong> para crear esta cuenta.</span>
-                                </label>
-
-                            </div>
-                        </div>
-
-                    </div><!-- fin form-panels -->
-
-                    <!-- BOTONERA FIJA AL FONDO -->
-                    <div class="form-actions">
-                        <button type="button" class="btn-nav btn-prev" id="btn-prev" onclick="changePanel(-1)" style="display:none">
-                            <i class="bi bi-arrow-left"></i> Anterior
-                        </button>
-
-                        <div class="step-indicator">
-                            Paso <span id="step-num">1</span> de 4
-                        </div>
-
-                        <button type="button" class="btn-nav btn-next" id="btn-next" onclick="changePanel(1)">
-                            Siguiente <i class="bi bi-arrow-right"></i>
-                        </button>
-
-                        <button type="submit" class="btn-submit-final" id="btn-submit" style="display:none">
-                            <i class="bi bi-person-check-fill"></i> ¡Crear mi cuenta!
-                        </button>
+                    <!-- ==== SECCIÓN 3: TUTOR ==== -->
+                    <div class="form-section-pill pill-tutor">
+                        <i class="bi bi-people-fill"></i> Datos del tutor
                     </div>
+                    <div class="form-section-box" id="box-3">
+
+                        <!-- Nombre tutor -->
+                        <div class="field-block">
+                            <label class="field-label" for="id_nombre_tutor">
+                                Nombre del tutor <span style="color:#f87171">*</span>
+                            </label>
+                            {% if form.nombre_tutor.errors %}
+                            <div class="error-msg">
+                                <i class="bi bi-x-circle-fill"></i>{{ form.nombre_tutor.errors|striptags }}
+                            </div>
+                            {% endif %}
+                            <div class="input-wrap">
+                                <i class="bi bi-person-hearts input-icon-left"></i>
+                                <input
+                                    id="id_nombre_tutor"
+                                    class="field-input {% if form.nombre_tutor.errors %}field-error{% endif %}"
+                                    type="text" name="nombre_tutor"
+                                    placeholder="Nombre completo del tutor"
+                                    value="{{ form.nombre_tutor.value|default_if_none:'' }}" required
+                                >
+                            </div>
+                            <div class="hint-text required">
+                                <i class="bi bi-asterisk"></i> Campo obligatorio.
+                            </div>
+                        </div>
+
+                        <!-- Email tutor -->
+                        <div class="field-block">
+                            <label class="field-label" for="id_email_tutor">
+                                Email del tutor <span style="color:#f87171">*</span>
+                            </label>
+                            {% if form.email_tutor.errors %}
+                            <div class="error-msg">
+                                <i class="bi bi-x-circle-fill"></i>{{ form.email_tutor.errors|striptags }}
+                            </div>
+                            {% endif %}
+                            <div class="input-wrap">
+                                <i class="bi bi-envelope-fill input-icon-left"></i>
+                                <input
+                                    id="id_email_tutor"
+                                    class="field-input {% if form.email_tutor.errors %}field-error{% endif %}"
+                                    type="email" name="email_tutor"
+                                    placeholder="correo@ejemplo.com"
+                                    value="{{ form.email_tutor.value|default_if_none:'' }}" required
+                                >
+                            </div>
+                            <div class="hint-text required">
+                                <i class="bi bi-asterisk"></i> Campo obligatorio.
+                            </div>
+                        </div>
+
+                    </div><!-- fin box-3 -->
+
+                    <div class="form-divider"></div>
+
+                    <!-- ==== SECCIÓN 4: CONSENTIMIENTOS ==== -->
+                    <div class="form-section-pill pill-consent">
+                        <i class="bi bi-shield-check-fill"></i> Consentimientos
+                    </div>
+                    <div class="form-section-box" id="box-4">
+
+                        {% if form.acepto_terminos.errors %}
+                        <div class="error-msg mb-2">
+                            <i class="bi bi-x-circle-fill"></i>{{ form.acepto_terminos.errors|striptags }}
+                        </div>
+                        {% endif %}
+                        <label class="check-row">
+                            <input type="checkbox" name="acepto_terminos"
+                                {% if form.acepto_terminos.value %}checked{% endif %}>
+                            <span>📋 Acepto los <strong>términos y condiciones</strong> de uso de Finance Kids.</span>
+                        </label>
+
+                        {% if form.consentimiento_tutor.errors %}
+                        <div class="error-msg mb-2">
+                            <i class="bi bi-x-circle-fill"></i>{{ form.consentimiento_tutor.errors|striptags }}
+                        </div>
+                        {% endif %}
+                        <label class="check-row">
+                            <input type="checkbox" name="consentimiento_tutor"
+                                {% if form.consentimiento_tutor.value %}checked{% endif %}>
+                            <span>👨‍👩‍👧 Confirmo que cuento con el <strong>consentimiento de mi tutor</strong> para crear esta cuenta.</span>
+                        </label>
+
+                    </div><!-- fin box-4 -->
+
+                    <!-- BOTONES -->
+                    <button type="submit" class="btn-submit">
+                        <i class="bi bi-person-check-fill me-2"></i>¡Crear mi cuenta!
+                    </button>
+
+                    <div class="divider-text">— ¿Ya tienes cuenta? —</div>
+
+                    <a href="{% url 'login' %}" class="btn-login-link">
+                        <i class="bi bi-box-arrow-in-right"></i>Iniciar sesión
+                    </a>
 
                 </form>
             </div>
+            <!-- Fin panel derecho -->
 
         </div>
     </div>
@@ -349,9 +376,11 @@
         © 2025 Finance Kids 💙 · Aprendiendo finanzas desde pequeños
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        /* ---- Mostrar/ocultar contraseña ---- */
+        /* ---- Mostrar / ocultar contraseña ---- */
         function togglePwd(inputId, iconId) {
             const input = document.getElementById(inputId);
             const icon  = document.getElementById(iconId);
@@ -359,13 +388,13 @@
             icon.className = input.type === 'password' ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
         }
 
-        /* ---- Medidor seguridad ---- */
+        /* ---- Medidor de seguridad ---- */
         const levels = [
-            { label:'Seguridad: muy baja',  width:'10%',  color:'#D1D5DB' },
-            { label:'Seguridad: débil',     width:'30%',  color:'#ef4444' },
-            { label:'Seguridad: media',     width:'55%',  color:'#f97316' },
-            { label:'Seguridad: buena',     width:'78%',  color:'#1e96fc' },
-            { label:'Seguridad: fuerte 💪', width:'100%', color:'#00c97a' },
+            { label: 'Seguridad: muy baja',   width: '10%',  color: '#D1D5DB' },
+            { label: 'Seguridad: débil',       width: '30%',  color: '#ef4444' },
+            { label: 'Seguridad: media',       width: '55%',  color: '#f97316' },
+            { label: 'Seguridad: buena',       width: '78%',  color: '#1e96fc' },
+            { label: 'Seguridad: fuerte 💪',   width: '100%', color: '#00c97a' },
         ];
 
         function checkStrength(val) {
@@ -379,63 +408,38 @@
             applyLevel(levels[Math.min(score, levels.length - 1)]);
         }
 
-        function applyLevel(l) {
-            const f = document.getElementById('strengthFill');
-            const t = document.getElementById('strengthText');
-            if (!f || !t) return;
-            f.style.width = l.width;
-            f.style.backgroundColor = l.color;
-            t.textContent = l.label;
-            t.style.color = l.color;
+        function applyLevel(level) {
+            const fill = document.getElementById('strengthFill');
+            const text = document.getElementById('strengthText');
+            fill.style.width = level.width;
+            fill.style.backgroundColor = level.color;
+            text.textContent = level.label;
+            text.style.color = level.color;
         }
 
-        /* ---- Navegación por paneles ---- */
-        let currentPanel = 0;
-        const totalPanels = 4;
-        const tabs  = document.querySelectorAll('.section-tab');
-        const panels = document.querySelectorAll('.form-panel');
-        const stepItems = document.querySelectorAll('.step-item');
+        /* ---- Step Tracker al hacer scroll ---- */
+        const boxes = ['box-1','box-2','box-3','box-4'];
+        const steps = ['step-1','step-2','step-3','step-4'];
 
-        function changePanel(dir) {
-            const next = currentPanel + dir;
-            if (next < 0 || next >= totalPanels) return;
-            goToPanel(next);
+        function updateSteps() {
+            let current = 0;
+            boxes.forEach((id, i) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.6) current = i;
+            });
+            steps.forEach((id, i) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.classList.remove('active', 'done');
+                if      (i < current)  el.classList.add('done');
+                else if (i === current) el.classList.add('active');
+            });
         }
 
-        function goToPanel(idx) {
-            // Marcar panel anterior como done
-            if (idx > currentPanel) {
-                tabs[currentPanel].classList.add('done');
-                stepItems[currentPanel].classList.remove('active');
-                stepItems[currentPanel].classList.add('done');
-            } else {
-                tabs[idx].classList.remove('done');
-                stepItems[idx].classList.remove('done');
-            }
-
-            panels[currentPanel].classList.remove('active');
-            tabs[currentPanel].classList.remove('active');
-
-            currentPanel = idx;
-
-            panels[currentPanel].classList.add('active');
-            tabs[currentPanel].classList.add('active');
-            stepItems[currentPanel].classList.add('active');
-            stepItems[currentPanel].classList.remove('done');
-
-            // Actualizar indicador
-            document.getElementById('step-num').textContent = currentPanel + 1;
-
-            // Botones
-            document.getElementById('btn-prev').style.display   = currentPanel === 0 ? 'none' : 'flex';
-            document.getElementById('btn-next').style.display   = currentPanel === totalPanels - 1 ? 'none' : 'flex';
-            document.getElementById('btn-submit').style.display = currentPanel === totalPanels - 1 ? 'flex' : 'none';
-        }
-
-        // Click en tabs
-        tabs.forEach((tab, i) => {
-            tab.addEventListener('click', () => goToPanel(i));
-        });
+        document.getElementById('scroll-area')?.addEventListener('scroll', updateSteps);
+        window.addEventListener('scroll', updateSteps);
+        updateSteps();
     </script>
 
 </body>
