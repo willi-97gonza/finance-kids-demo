@@ -492,9 +492,12 @@
                     <i class="bi bi-controller me-2"></i>¡Jugar ahora!
                 </a>
 
-                <a href="{% url 'construccion' %}" class="btn btn-completar" style="text-decoration:none;">
-    ✅ ¡Lo aprendí! Siguiente tema
-</a>
+                <form method="POST" action="{% url 'completar_tema' tema=3 %}" class="m-0">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-completar">
+                        ✅ ¡Lo aprendí! Siguiente tema
+                    </button>
+                </form>
 
             </div>
 
