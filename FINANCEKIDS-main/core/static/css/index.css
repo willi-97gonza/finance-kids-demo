@@ -1,0 +1,626 @@
+/* ============================================================
+   index.css — Finance Kids · Página principal de Temas
+   Paleta "Cielo de Verano" · Coherente con login y registro
+   ============================================================ */
+
+:root {
+    --azul-persa:   #072ac8;
+    --azul-dodger:  #1e96fc;
+    --azul-helado:  #a2d6f9;
+    --azul-oscuro:  #020f5e;
+    --limon:        #fcf300;
+    --amarillo-bus: #ffc600;
+    --blanco:       #ffffff;
+    --gris-texto:   #64748b;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-persa) 50%, var(--azul-dodger) 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ------------------------------------------------------------------
+   ESTRELLAS DE FONDO
+------------------------------------------------------------------ */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(4px 4px at 8%   18%, rgba(255,255,255,0.95) 0%, transparent 100%),
+        radial-gradient(3px 3px at 22%   6%, rgba(255,255,255,0.90) 0%, transparent 100%),
+        radial-gradient(5px 5px at 38%  44%, rgba(255,255,255,0.85) 0%, transparent 100%),
+        radial-gradient(6px 6px at 58%  12%, rgba(255,255,255,1.00) 0%, transparent 100%),
+        radial-gradient(4px 4px at 72%  68%, rgba(255,255,255,0.90) 0%, transparent 100%),
+        radial-gradient(3px 3px at 88%  30%, rgba(255,255,255,0.80) 0%, transparent 100%),
+        radial-gradient(7px 7px at 45%  82%, rgba(252,243,0,0.90)   0%, transparent 100%),
+        radial-gradient(6px 6px at 78%  55%, rgba(255,198,0,0.85)   0%, transparent 100%),
+        radial-gradient(5px 5px at 15%  72%, rgba(162,214,249,0.95) 0%, transparent 100%),
+        radial-gradient(4px 4px at 93%  14%, rgba(162,214,249,0.80) 0%, transparent 100%),
+        radial-gradient(3px 3px at 62%  90%, rgba(255,255,255,0.70) 0%, transparent 100%),
+        radial-gradient(5px 5px at 5%   45%, rgba(252,243,0,0.75)   0%, transparent 100%),
+        radial-gradient(4px 4px at 33%  28%, rgba(162,214,249,0.85) 0%, transparent 100%);
+    animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(5px 5px at 15%  35%, rgba(162,214,249,0.90) 0%, transparent 100%),
+        radial-gradient(4px 4px at 38%  65%, rgba(255,255,255,0.80) 0%, transparent 100%),
+        radial-gradient(5px 5px at 60%  25%, rgba(162,214,249,0.85) 0%, transparent 100%),
+        radial-gradient(8px 8px at 70%  70%, rgba(252,243,0,0.75)   0%, transparent 100%),
+        radial-gradient(5px 5px at 93%  18%, rgba(162,214,249,0.85) 0%, transparent 100%);
+    animation: twinkle 7s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes twinkle {
+    0%   { opacity: 0.5; }
+    50%  { opacity: 1.0; }
+    100% { opacity: 0.65; }
+}
+
+/* Estrellas que caen */
+.stars-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    top: -10px;
+    width: 5px; height: 5px;
+    background: white;
+    border-radius: 50%;
+    animation: starFall linear infinite;
+    opacity: 0;
+}
+
+.star:nth-child(1)  { left:8%;  animation-duration:8s;  animation-delay:0s;   width:6px; height:6px; background:var(--limon); }
+.star:nth-child(2)  { left:18%; animation-duration:12s; animation-delay:2s;   width:4px; height:4px; }
+.star:nth-child(3)  { left:27%; animation-duration:7s;  animation-delay:5s;   width:7px; height:7px; background:var(--azul-helado); }
+.star:nth-child(4)  { left:40%; animation-duration:10s; animation-delay:1s;   width:4px; height:4px; }
+.star:nth-child(5)  { left:53%; animation-duration:9s;  animation-delay:3s;   width:6px; height:6px; background:var(--amarillo-bus); }
+.star:nth-child(6)  { left:65%; animation-duration:13s; animation-delay:6s;   width:4px; height:4px; }
+.star:nth-child(7)  { left:74%; animation-duration:8s;  animation-delay:4s;   width:7px; height:7px; }
+.star:nth-child(8)  { left:83%; animation-duration:11s; animation-delay:1.5s; width:5px; height:5px; background:var(--limon); }
+.star:nth-child(9)  { left:92%; animation-duration:7s;  animation-delay:7s;   width:6px; height:6px; }
+.star:nth-child(10) { left:3%;  animation-duration:15s; animation-delay:9s;   width:4px; height:4px; background:var(--azul-helado); }
+.star:nth-child(11) { left:35%; animation-duration:6s;  animation-delay:2.5s; width:5px; height:5px; }
+.star:nth-child(12) { left:58%; animation-duration:10s; animation-delay:8s;   width:7px; height:7px; background:var(--amarillo-bus); }
+
+@keyframes starFall {
+    0%   { transform:translateY(-10px) translateX(0);    opacity:0; }
+    10%  { opacity:1; }
+    90%  { opacity:0.7; }
+    100% { transform:translateY(110vh) translateX(20px); opacity:0; }
+}
+
+/* ------------------------------------------------------------------
+   NAVBAR
+------------------------------------------------------------------ */
+.navbar-kids {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(2,15,94,0.60);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    padding: 10px 0;
+}
+
+.navbar-brand-kids {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.75rem;
+    color: var(--limon);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand-kids img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-link-kids {
+    color: rgba(255,255,255,0.82) !important;
+    font-weight: 700;
+    font-size: 0.93rem;
+    padding: 6px 14px !important;
+    border-radius: 50px;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-link-kids:hover {
+    background: rgba(255,255,255,0.14);
+    color: var(--blanco) !important;
+}
+
+.nav-link-kids.salir {
+    color: rgba(255,160,160,0.88) !important;
+}
+
+.nav-link-kids.salir:hover {
+    background: rgba(220,38,38,0.15);
+    color: #fca5a5 !important;
+}
+
+.user-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 50px;
+    padding: 5px 14px;
+    color: var(--blanco);
+    font-weight: 800;
+    font-size: 0.88rem;
+}
+
+.user-avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--limon), var(--azul-dodger));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: var(--azul-oscuro);
+}
+
+/* ------------------------------------------------------------------
+   HERO HEADER
+------------------------------------------------------------------ */
+.hero-header {
+    position: relative;
+    z-index: 1;
+    padding: 48px 0 32px;
+    text-align: center;
+}
+
+.welcome-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(90deg, var(--azul-persa), var(--azul-dodger));
+    color: var(--blanco);
+    font-weight: 900;
+    font-size: 0.80rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 7px 22px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 18px rgba(30,150,252,0.40);
+    animation: pulso 2.5s ease-in-out infinite;
+}
+
+@keyframes pulso {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.04); }
+}
+
+.hero-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    color: var(--blanco);
+    line-height: 1.1;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+.hero-title span { color: var(--limon); }
+
+.hero-sub {
+    color: var(--azul-helado);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+/* ------------------------------------------------------------------
+   BARRA DE PROGRESO GLOBAL
+------------------------------------------------------------------ */
+.progress-overview {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 40px;
+}
+
+.progress-glass {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 24px;
+    padding: 22px 28px;
+    backdrop-filter: blur(14px);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.prog-stat { text-align: center; }
+
+.prog-stat .num {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--blanco);
+    line-height: 1;
+}
+
+.prog-stat .num.highlight { color: var(--limon); }
+
+.prog-stat .lbl {
+    color: rgba(255,255,255,0.50);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 3px;
+}
+
+.prog-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+}
+
+.progress-bar-global {
+    height: 12px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.10);
+    overflow: hidden;
+}
+
+.progress-bar-global .bar {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--azul-persa), var(--azul-dodger), var(--limon));
+    box-shadow: 0 0 16px rgba(30,150,252,0.50);
+    transition: width 1.2s cubic-bezier(.22,1,.36,1);
+}
+
+/* ------------------------------------------------------------------
+   SECCIÓN TEMAS
+------------------------------------------------------------------ */
+.temas-section {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 60px;
+}
+
+.section-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.10);
+}
+
+/* ------------------------------------------------------------------
+   TARJETAS DE TEMA — desbloqueadas
+------------------------------------------------------------------ */
+.tema-card {
+    border-radius: 22px;
+    padding: 28px 24px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    cursor: pointer;
+    text-decoration: none !important;
+    display: block;
+    animation: cardIn 0.6s cubic-bezier(.22,1,.36,1) both;
+}
+
+.tema-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    pointer-events: none;
+}
+
+.tema-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    pointer-events: none;
+}
+
+@keyframes cardIn {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+
+.tema-card:nth-child(1) { animation-delay: 0.05s; }
+.tema-card:nth-child(2) { animation-delay: 0.12s; }
+.tema-card:nth-child(3) { animation-delay: 0.19s; }
+
+.tema-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 56px rgba(0,0,0,0.38);
+}
+
+/* Colores por tema */
+.tc-1 {
+    background: linear-gradient(135deg, var(--azul-persa), var(--azul-dodger));
+    box-shadow: 0 8px 28px rgba(7,42,200,0.45);
+}
+
+.tc-2 {
+    background: linear-gradient(135deg, #055f3f, #00c97a);
+    box-shadow: 0 8px 28px rgba(5,95,63,0.45);
+}
+
+.tc-3 {
+    background: linear-gradient(135deg, #92400e, var(--amarillo-bus));
+    box-shadow: 0 8px 28px rgba(146,64,14,0.45);
+}
+
+.tema-num {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.tema-emoji {
+    font-size: 2.6rem;
+    margin-bottom: 10px;
+    display: block;
+    line-height: 1;
+}
+
+.tema-titulo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.25rem;
+    color: var(--blanco);
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+.tema-desc {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.tema-badge-ok {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: rgba(252,243,0,0.20);
+    border: 1.5px solid rgba(252,243,0,0.50);
+    border-radius: 50px;
+    padding: 3px 10px;
+    color: var(--limon);
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.tema-arrow {
+    position: absolute;
+    bottom: 18px; right: 18px;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blanco);
+    font-size: 0.9rem;
+    transition: background 0.25s, transform 0.25s;
+}
+
+.tema-card:hover .tema-arrow {
+    background: rgba(255,255,255,0.30);
+    transform: translate(2px,-2px);
+}
+
+/* ------------------------------------------------------------------
+   TARJETAS BLOQUEADAS
+------------------------------------------------------------------ */
+.tema-card-locked {
+    border-radius: 22px;
+    padding: 28px 24px;
+    background: rgba(255,255,255,0.05);
+    border: 2px dashed rgba(255,255,255,0.12);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s;
+    animation: cardIn 0.6s cubic-bezier(.22,1,.36,1) both;
+}
+
+.tema-card-locked:hover { border-color: rgba(255,255,255,0.22); }
+
+.tema-card-locked a { text-decoration: none; display: block; height: 100%; }
+
+.lock-icon-sm {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    display: block;
+    opacity: 0.45;
+}
+
+.locked-num {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.28);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.locked-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.32);
+    margin-bottom: 6px;
+}
+
+.locked-sub {
+    color: rgba(255,255,255,0.20);
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.locked-badge {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: rgba(162,214,249,0.10);
+    border: 1px solid rgba(162,214,249,0.25);
+    border-radius: 50px;
+    padding: 3px 10px;
+    color: rgba(162,214,249,0.60);
+    font-size: 0.70rem;
+    font-weight: 800;
+}
+
+/* ------------------------------------------------------------------
+   NO AUTENTICADO
+------------------------------------------------------------------ */
+.not-auth-card {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.14);
+    border-radius: 28px;
+    padding: 52px 40px;
+    text-align: center;
+    backdrop-filter: blur(16px);
+    max-width: 480px;
+    margin: 80px auto 0;
+    animation: cardIn 0.7s cubic-bezier(.22,1,.36,1) both;
+}
+
+.not-auth-card .icon { font-size: 4rem; margin-bottom: 16px; }
+
+.not-auth-card h2 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--blanco);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.not-auth-card p {
+    color: var(--azul-helado);
+    font-weight: 600;
+    margin-bottom: 28px;
+}
+
+.btn-login-card {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.15rem;
+    background: linear-gradient(90deg, var(--azul-persa), var(--azul-dodger));
+    color: var(--blanco);
+    border: none;
+    border-radius: 50px;
+    padding: 14px 40px;
+    box-shadow: 0 8px 24px rgba(7,42,200,0.40);
+    transition: transform 0.25s, box-shadow 0.25s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-login-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(7,42,200,0.50);
+    color: var(--blanco);
+}
+
+/* ------------------------------------------------------------------
+   BOTÓN CERRAR SESIÓN
+------------------------------------------------------------------ */
+.btn-logout {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.16);
+    color: var(--azul-helado);
+    border-radius: 50px;
+    padding: 11px 30px;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(6px);
+}
+
+.btn-logout:hover {
+    background: rgba(220,38,38,0.15);
+    border-color: rgba(220,38,38,0.30);
+    color: #fca5a5;
+}
+
+/* ------------------------------------------------------------------
+   FOOTER
+------------------------------------------------------------------ */
+.footer-bar {
+    position: relative;
+    z-index: 1;
+    background: rgba(2,15,94,0.40);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 0;
+    text-align: center;
+    color: rgba(255,255,255,0.32);
+    font-size: 0.80rem;
+    font-weight: 600;
+}
+
+.footer-bar a {
+    color: var(--limon);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.footer-bar a:hover { text-decoration: underline; }
+
+/* ------------------------------------------------------------------
+   RESPONSIVO
+------------------------------------------------------------------ */
+@media (max-width: 576px) {
+    .hero-title     { font-size: 2rem; }
+    .progress-glass { padding: 18px 16px; }
+}
