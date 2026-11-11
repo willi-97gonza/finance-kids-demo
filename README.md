@@ -11,6 +11,7 @@ Su objetivo es facilitar el aprendizaje de conceptos como ahorro, ingresos, gast
 | Recurso | Enlace |
 |---|---|
 | 🌐 Plataforma desplegada | [Finance Kids](https://finance-kids-demo.onrender.com/login/?next=/) |
+| 📖 Documentación del proyecto | [Ver documentación](https://documentacion-psi.vercel.app/) |
 | 🐙 Repositorio GitHub | [Ver repositorio](https://github.com/willi-97gonza/finance-kids-demo) |
 | 🦊 Repositorio GitLab | [Ver repositorio](https://gitlab.com/willi-97gonza/finance-kids-demo) |
 
